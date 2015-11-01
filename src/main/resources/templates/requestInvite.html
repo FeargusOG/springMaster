@@ -4,7 +4,13 @@
         <title>Request an Invite to feargus.org</title>
     </head>
     <body>
-        <h1>Thanks for requesting an invite!</h1>
+        <h1>Please fill in your email address to request an invite:</h1>
+        
+       <form action="#" th:action="@{/requestInvite?projectNameHere=Site}" th:object="${requestInvite}" method="post">
+        	<p>Email: <input type="text" th:field="*{userEmail}" required="required" /></p>
+        	<p>Project: <input type="text" th:field="*{projectName}" required="required" /></p>
+        	<p><input type="submit" value="Submit Invite Request" /></p>
+   		</form> 
         
     </body>
 </html>
