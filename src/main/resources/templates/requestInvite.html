@@ -6,7 +6,7 @@
     <body>
        <h1 th:text="'Please fill in your email address to request an invite for: '+${requestedProj}"></h1>
         
-       <form action="#" th:action="@{/requestInvite(projectNameHere=${requestedProj})}" th:object="${requestInvite}" method="post">
+       <form action="#" th:action="@{/requestInvite(projectName=${requestedProj})}" th:object="${requestInvite}" method="post">
         	<p>Email: <input type="text" th:field="*{userEmail}" required="required" /></p>
         	<p><input type="submit" value="Submit Invite Request" /></p>
    		</form> 

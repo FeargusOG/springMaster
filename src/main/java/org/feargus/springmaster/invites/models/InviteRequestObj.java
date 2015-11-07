@@ -9,7 +9,7 @@ public class InviteRequestObj {
 	private static final Logger log = LoggerFactory.getLogger(InviteRequestObj.class);
 	private ArrayList<String> projectList = null;
 	private String userEmail = null;
-	private String projectNameHere = null;
+	private String projectName = null;
 	
 	public InviteRequestObj(){
 		this.projectList = new ArrayList<String>();
@@ -26,11 +26,11 @@ public class InviteRequestObj {
 		
 	}
 	
-	public void setProjectNameHere(String projectName) throws IllegalArgumentException {
+	public void setProjectName(String projectName) throws IllegalArgumentException {
 		
 		if(projectList.contains(projectName))
 		{
-			this.projectNameHere = projectName;
+			this.projectName = projectName;
 		} else {
 			log.info("Illegal project requested: "+projectName);
 			throw new IllegalArgumentException(projectName+" is not a valid project.");
@@ -42,6 +42,6 @@ public class InviteRequestObj {
 		this.projectList.add("Tester");
 	}
 	
-	public String getProjectNameHere() {return projectNameHere;}
+	public String getProjectName() {return projectName;}
 	public String getUserEmail() {return userEmail;}
 }
