@@ -25,12 +25,13 @@ public class RequestInviteCtrlr {
 
 	@RequestMapping(value="/requestInvite", method=RequestMethod.POST)
 	public String requestInvite(@RequestParam(value="projectName", required=true) String projectName, @ModelAttribute InviteRequestObj invite, Model model){
-		String token = "blaher1";
+		//String generateEmailLink = "www.feargus.org/generateInvite?userEmail="+invite.getUserEmail();
+		String generateEmailLink = "http://127.0.0.1:8080/generateInvite?userEmail="+invite.getUserEmail();
 		
 		log.info("Invite requested by: "+invite.getUserEmail());
 		
     	Mailer mailSender = new Mailer();
-    	mailSender.sendMail("feargusorg@gmail.com", "Invite Request for"+invite.getProjectName(), "I would like to join please! :) User = "+invite.getUserEmail()+" Project = "+invite.getProjectName()+" Token = "+token);
+    	mailSender.sendMail("feargusorg@gmail.com", "Invite Request for"+invite.getProjectName(), "I would like to join please! :)\n\nUser: "+invite.getUserEmail()+"\nProject: "+invite.getProjectName()+"\nInvite Generator URL: "+generateEmailLink);
     	
     	log.info("Finished sending a mail requesting invite for: "+invite.getUserEmail());
 		
