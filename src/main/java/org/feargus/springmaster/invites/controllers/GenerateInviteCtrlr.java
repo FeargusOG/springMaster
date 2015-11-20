@@ -1,9 +1,12 @@
 package org.feargus.springmaster.invites.controllers;
 
+import org.feargus.springmaster.mail.Mailer;
 import org.feargus.springmaster.uniqueids.UniqueTokenGenerator;
+import org.feargus.springmaster.utils.SystemVars;
 import org.feargus.springmaster.view.PostgresqlDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,20 +19,40 @@ public class GenerateInviteCtrlr {
 	
 	@RequestMapping(value="/generateInvite")
 	public String generateInvite(@RequestParam(value="userEmail", required=true) String userEmail, Model model){
-		UniqueTokenGenerator invTokGenerator = new UniqueTokenGenerator();
-		String uniqueToken = invTokGenerator.getUniqueToken();
+		final String uniqueToken = new UniqueTokenGenerator().getUniqueToken();
+		String errMsg = null;
 		
-		log.info("\n\nGONNA GENERATE HERE!! "+uniqueToken+"\n\n");
+		try {
+			this.insertInviteInDB(uniqueToken, userEmail);
+		} catch (DuplicateKeyException e) {
+			errMsg = "Tried to insert invite for email: "+userEmail+", but they are already invited!";
+			log.info(errMsg);
+		} catch (Exception ex){
+			log.info("General Exception");
+			ex.printStackTrace();
+			//TODO: Return a 500 error page here.
+		}
 		
-		PostgresqlDataSource psqlDataSource = new PostgresqlDataSource();
-    	JdbcTemplate jdbcTemplate = new JdbcTemplate(psqlDataSource.getDefaultDataSource());
-    	
-    	jdbcTemplate.update("INSERT INTO invitetokens(token, useremail) VALUES (?,?)", uniqueToken, userEmail);
+		this.emailUserInvite(userEmail, uniqueToken);
 		
-		
+		model.addAttribute("errMsg", errMsg);
 		model.addAttribute("userEmail", userEmail);
 		
 		return "generateInvite";
+	}
+	
+	private void insertInviteInDB(String uniqueToken, String userEmail) throws DuplicateKeyException, Exception{
+		PostgresqlDataSource psqlDataSource = new PostgresqlDataSource();
+    	JdbcTemplate jdbcTemplate = new JdbcTemplate(psqlDataSource.getDefaultDataSource());
+    	jdbcTemplate.update("INSERT INTO invitetokens(token, email) VALUES (?,?)", uniqueToken, userEmail);
+	}
+	
+	private void emailUserInvite(String userEmail, String token){
+		final String inviteConfirmationUrl = SystemVars.rootUrl+"/confirmInvite?userEmail="+userEmail+"&token="+token;
+		Mailer mailSender = new Mailer();
+    	mailSender.sendMail(userEmail, "Invite request accepted for feargus.org!", "Hi!\nThanks for requesting an invite at feargus.org! Please follow this link to confirm your invite: "+inviteConfirmationUrl);
+    	
+    	log.info("Finished sending a mail extending an invite for: "+userEmail);
 	}
 
 }
