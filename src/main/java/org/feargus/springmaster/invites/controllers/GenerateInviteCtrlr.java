@@ -26,8 +26,10 @@ public class GenerateInviteCtrlr {
 	try {
 	    this.insertInviteInDB(uniqueToken, userEmail);
 	} catch (DuplicateKeyException e) {
-	    errMsg = "Tried to insert invite for email: " + userEmail + ", but they are already invited!";
+	    errMsg = "Tried to insert invite for email: " + userEmail
+		    + ", but they are already invited! Resending invite email to user...";
 	    log.info(errMsg);
+
 	} catch (Exception ex) {
 	    log.info("General Exception");
 	    ex.printStackTrace();
@@ -54,7 +56,7 @@ public class GenerateInviteCtrlr {
 		+ "&token=" + token;
 	Mailer mailSender = new Mailer();
 	mailSender.sendMail(userEmail, "Invite request accepted for feargus.org!",
-		"Hi!\nThanks for requesting an invite at feargus.org! Please follow this link to confirm your invite: "
+		"Hi!\n\nThanks for requesting an invite at feargus.org! Please follow this link to confirm your invite: "
 			+ inviteConfirmationUrl);
 
 	log.info("Finished sending a mail extending an invite for: " + userEmail);
