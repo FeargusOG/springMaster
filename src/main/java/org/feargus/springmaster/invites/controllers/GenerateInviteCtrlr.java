@@ -1,9 +1,9 @@
 package org.feargus.springmaster.invites.controllers;
 
 import org.feargus.springmaster.mail.Mailer;
+import org.feargus.springmaster.model.PostgresqlDataSource;
 import org.feargus.springmaster.uniqueids.UniqueTokenGenerator;
 import org.feargus.springmaster.utils.SystemVars;
-import org.feargus.springmaster.view.PostgresqlDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DuplicateKeyException;

@@ -1,4 +1,4 @@
-package org.feargus.springmaster.view;
+package org.feargus.springmaster.model;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -21,8 +21,8 @@ public class PostgresqlDataSource {
 	public BasicDataSource getDefaultDataSource(){
 		URI dbUri;
 		try {
-			//dbUri = new URI(System.getenv("DATABASE_URL"));	DATABASE_URL_TEST TODO
-			dbUri = new URI(System.getenv("DATABASE_URL_TEST"));
+			dbUri = new URI(System.getenv("DATABASE_URL"));
+			//dbUri = new URI(System.getenv("DATABASE_URL_TEST"));
 			
 			dbUsername = dbUri.getUserInfo().split(":")[0];
 			dbPassword = dbUri.getUserInfo().split(":")[1];
