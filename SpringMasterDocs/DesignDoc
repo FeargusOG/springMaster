@@ -1,0 +1,28 @@
+Design Doc for SpringMaster
+
+I get an email. It has a link to a generateInvite url
+
+This generateInvite controller returns no page. It just generates a token. Stores it in the DB with a DateCreated entry. It then also emails the requester
+
+This email contains a link with ..../acceptInvite?token=abcdefg
+
+They can now create a user account. If the token is in the DB and matches the useremail, the creation will be successful. Otherwise it will fail.
+
+Tokens will be deleted from the db if no account has been created with it within 24hrs (DELETE FROM table WHERE date < '2011-09-21 08:21:22';)
+
+Possible table layout:
+
+	Token Table:
+		Token
+		UserEmail
+		Date Created
+
+	User Table:
+		UserId
+		Email
+		Password (Hashed)
+		Date Created
+		Enabled
+
+	ProjectTable
+		UsersAllowed

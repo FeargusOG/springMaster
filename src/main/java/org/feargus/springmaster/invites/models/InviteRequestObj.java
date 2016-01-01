@@ -8,12 +8,22 @@ import org.slf4j.LoggerFactory;
 public class InviteRequestObj {
     private static final Logger log = LoggerFactory.getLogger(InviteRequestObj.class);
     private ArrayList<String> projectList = null;
+    private String userName = null;
     private String userEmail = null;
     private String projectName = null;
 
     public InviteRequestObj() {
 	this.projectList = new ArrayList<String>();
 	this.populateProjectList();
+    }
+
+    public void setUserName(String userName) {
+	if (userName != null) {
+	    this.userName = userName;
+	} else {
+	    log.info("NULL username provided for project request!");
+	    throw new IllegalArgumentException("Username cannot be empty!");
+	}
     }
 
     public void setUserEmail(String userEmail) {
@@ -23,7 +33,6 @@ public class InviteRequestObj {
 	    log.info("NULL email provided for project request!");
 	    throw new IllegalArgumentException("Email address cannot be empty!");
 	}
-
     }
 
     public void setProjectName(String projectName) throws IllegalArgumentException {
@@ -47,5 +56,9 @@ public class InviteRequestObj {
 
     public String getUserEmail() {
 	return userEmail;
+    }
+
+    public String getUserName() {
+	return userName;
     }
 }

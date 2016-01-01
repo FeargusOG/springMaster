@@ -24,4 +24,6 @@ public class ConfirmInviteCtrl {
 	return "confirmInvite";
     }
 
+    // private void insertNewUser()
+
 }
