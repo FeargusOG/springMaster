@@ -4,39 +4,28 @@ Design Doc for SpringMaster
 	*    Site Framework Design    *
 	*******************************
 
+					    ----> project A
+	index ---> home --------> project B
+						----> project C
 
-	
+	At index, the user will be presented with either logging in or creating an account on the index page. Account creation is public and open. Once a user has created an account, they can log into the home page. Here they will be presented with a list of projects they are a member of, and the rest of the projects that they can request an invite for. This will not be an exhaustive list of all work in progress projects - only ones that are generally available. Admin users will have the exhaustive list and are automatically a member of every project.
+
 
 	*******************************
 	*    Project Invite System    *
 	*******************************
-		I get an email. It has a link to a generateInvite url
 
-		This generateInvite controller returns no page. It just generates a token. Stores it in the DB with a DateCreated entry. It then also emails the requester
+	I get an email. It has a link to a generateInvite url
 
-		This email contains a link with ..../acceptInvite?token=abcdefg
+	This generateInvite controller returns no page. It just generates a token. Stores it in the DB with a DateCreated entry. It then also emails the requester
 
-		They can now create a user account. If the token is in the DB and matches the useremail, the creation will be successful. Otherwise it will fail.
+	This email contains a link with ..../acceptInvite?token=abcdefg
 
-		Tokens will be deleted from the db if no account has been created with it within 24hrs (DELETE FROM table WHERE date < '2011-09-21 08:21:22';)
+	They can now create a user account. If the token is in the DB and matches the useremail, the creation will be successful. Otherwise it will fail.
+
+	Tokens will be deleted from the db if no account has been created with it within 24hrs (DELETE FROM table WHERE date < '2011-09-21 08:21:22';)
 
 
 	*************************
 	*    Database Design    *
 	*************************
-		Possible table layout:
-
-			Token Table:
-				Token
-				UserEmail
-				Date Created
-
-			User Table:
-				UserId
-				Email
-				Password (Hashed)
-				Date Created
-				Enabled
-
-			ProjectTable
-				UsersAllowed
