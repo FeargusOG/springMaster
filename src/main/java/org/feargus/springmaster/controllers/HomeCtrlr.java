@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class HomeCtrlr {
 
-	@RequestMapping("/home")
-	public String home(){
-		return "home";
-	}
-	
+    @RequestMapping("/home")
+    public String home() {
+	return "home";
+    }
+
 }

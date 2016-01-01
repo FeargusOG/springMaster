@@ -1,9 +1,10 @@
 package org.feargus.springmaster.invites.controllers;
 
+import org.feargus.springmaster.crypto.UniqueTokenGenerator;
 import org.feargus.springmaster.mail.Mailer;
 import org.feargus.springmaster.model.PostgresqlDataSource;
-import org.feargus.springmaster.uniqueids.UniqueTokenGenerator;
 import org.feargus.springmaster.utils.SystemVars;
+import org.feargus.springmaster.utils.UtilVars;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DuplicateKeyException;
@@ -21,12 +22,12 @@ public class GenerateInviteCtrlr {
     public String generateInvite(@RequestParam(value = "userEmail", required = true) String userEmail,
 	    Model model) {
 	final String uniqueToken = new UniqueTokenGenerator().getUniqueToken();
-	String errMsg = null;//
+	String errMsg = null;
 
 	try {
 	    this.insertInviteInDB(uniqueToken, userEmail);
 	} catch (DuplicateKeyException e) {
-	    errMsg = "Tried to insert invite for email: " + userEmail
+	    errMsg = "Tried to insert invite for email: " + UtilVars.PII_START + userEmail + UtilVars.PII_END
 		    + ", but they are already invited! Resending invite email to user...";
 	    log.info(errMsg);
 
@@ -59,7 +60,8 @@ public class GenerateInviteCtrlr {
 		"Hi!\n\nThanks for requesting an invite at feargus.org! Please follow this link to confirm your invite: "
 			+ inviteConfirmationUrl);
 
-	log.info("Finished sending a mail extending an invite for: " + userEmail);
+	log.info("Finished sending a mail extending an invite for: " + UtilVars.PII_START + userEmail
+		+ UtilVars.PII_END);
     }
 
 }

@@ -1,5 +1,6 @@
 package org.feargus.springmaster.invites.controllers;
 
+import org.feargus.springmaster.utils.UtilVars;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -17,9 +18,8 @@ public class ConfirmInviteCtrl {
     public String confirmInvite(@RequestParam(value = "userEmail", required = true) String userEmail,
 	    @RequestParam(value = "token", required = true) String token, Model model) {
 
-	log.info("Confirmed an invite for <pii>" + userEmail + "</pii>");
+	log.info("Confirmed an invite for: " + UtilVars.PII_START + userEmail + UtilVars.PII_END);
 	model.addAttribute("userEmail", userEmail);
-	model.addAttribute("token", "Confirmed an invite for <pii>" + userEmail + "</pii>");
 
 	return "confirmInvite";
     }

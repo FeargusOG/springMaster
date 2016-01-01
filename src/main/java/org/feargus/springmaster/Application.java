@@ -10,19 +10,20 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class})
+@EnableAutoConfiguration(exclude = { DataSourceAutoConfiguration.class })
 @ComponentScan
-//@SpringBootApplication //This annotation is the same as the other three put together
+// @SpringBootApplication //This annotation is the same as the other three put
+// together
 public class Application implements CommandLineRunner {
-	
-	private static final Logger log = LoggerFactory.getLogger(Application.class);
+
+    private static final Logger log = LoggerFactory.getLogger(Application.class);
 
     public static void main(String args[]) {
-        SpringApplication.run(Application.class, args);
+	SpringApplication.run(Application.class, args);
     }
-    
+
     @Override
     public void run(String... strings) throws Exception {
-    	log.info("STARTING RUN....");
+	log.info("STARTING RUN....");
     }
 }
