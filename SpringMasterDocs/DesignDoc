@@ -33,3 +33,27 @@ Design Doc for SpringMaster
 	*************************
 	*    Database Design    *
 	*************************
+
+	Members:
+		userID		(PK)
+		userName	(uniqueConstraint)
+		email 		(uniqueConstraint)
+		salt
+		pswrd
+		createTime
+		userType
+
+	Projects:
+		projectID	(PK)
+		projectName	(uniqueConstraint?)
+		clearanceLevel
+
+	ProjectInvites:
+		token
+		userID		(FK)(CompPK)
+		projectID	(FK)(CompPK)
+		createTime
+
+	ProjectAccessList
+		userID		(FK)(CompPK)
+		projectID	(FK)(CompPK)

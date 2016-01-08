@@ -45,6 +45,7 @@ public class InviteRequestObj {
 	}
     }
 
+    // TODO: This needs to be populated from the DB prob...
     private void populateProjectList() {
 	this.projectList.add("Site");
 	this.projectList.add("ProjectC");
