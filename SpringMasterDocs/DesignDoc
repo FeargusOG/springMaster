@@ -15,6 +15,10 @@ Design Doc for SpringMaster
 	*    Project Invite System    *
 	*******************************
 
+	> A user requests access to a project - requestInvite url
+	> I get an email requesting access. It has a link to send the invite - sendInvite url
+	> The user gets an email with a link to accept invite - acceptInvite url
+
 	I get an email. It has a link to a generateInvite url
 
 	This generateInvite controller returns no page. It just generates a token. Stores it in the DB with a DateCreated entry. It then also emails the requester

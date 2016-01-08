@@ -5,6 +5,17 @@
     </head>
     <body>
         <h1>Welcome to the HomePage!</h1>
+        &nbsp;
+        <p>Here is the list of Projects you have access to:</p>
+        <ul>
+        	<li>Project A</li>
+        	<li>Project B</li>
+        </ul>
         
+        <p>Here is the list of Projects you can request access to:</p>
+        <ul>
+        	<li>Project C: <a th:href="@{/requestInvite?projectName=ProjectC}">Request Invite!</a></li>
+        	<li>Project D: <a th:href="@{/requestInvite?projectName=ProjectD}">Request Invite!</a></li>
+        </ul>
     </body>
 </html>
