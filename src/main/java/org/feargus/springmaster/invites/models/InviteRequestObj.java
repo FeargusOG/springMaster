@@ -47,7 +47,8 @@ public class InviteRequestObj {
 
     private void populateProjectList() {
 	this.projectList.add("Site");
-	this.projectList.add("Tester");
+	this.projectList.add("ProjectC");
+	this.projectList.add("ProjectD");
     }
 
     public String getProjectName() {
