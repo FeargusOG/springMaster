@@ -1,21 +1,20 @@
-package org.feargus.springmaster.users.controllers;
+package org.feargus.springmaster.users.model;
 
 import java.security.NoSuchAlgorithmException;
 
 import javax.validation.constraints.Size;
 
 import org.feargus.springmaster.crypto.UniqueTokenGenerator;
-import org.feargus.springmaster.crypto.UserPasswordUtils;
 import org.feargus.springmaster.utils.UtilVars;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class AccountCreationForm {
+public class User {
 
     private String salt;
     private String password = null;
-    private UserPasswordUtils userPswrdUtil;
-    private static final Logger log = LoggerFactory.getLogger(AccountCreationForm.class);
+    private UserUtils userPswrdUtil;
+    private static final Logger log = LoggerFactory.getLogger(User.class);
 
     @Size(min = 2, max = 255)
     private String name = null;
@@ -23,8 +22,8 @@ public class AccountCreationForm {
     @Size(min = 3, max = 255)
     private String email = null;
 
-    public AccountCreationForm() {
-	this.userPswrdUtil = new UserPasswordUtils();
+    public User() {
+	this.userPswrdUtil = new UserUtils();
 	this.salt = new UniqueTokenGenerator().getUniqueToken();
     }
 

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+    <head>
+        <title>Spring Security Example</title>
+    </head>
+    <body>
+        <div th:if="${isSuccess == true}">
+    		<p>Thanks for activating your account!</p>
+    	</div>
+    	
+    	<div th:if="${isSuccess == false}">
+        	<p>Error activating your account! An admin at feargus.org has been notified...</p>
+        </div>
+                       
+    </body>
+</html>

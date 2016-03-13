@@ -1,8 +1,11 @@
 package org.feargus.springmaster.users.controllers;
 
+import java.security.NoSuchAlgorithmException;
+
 import javax.validation.Valid;
 
-import org.feargus.springmaster.users.model.UserAccModel;
+import org.feargus.springmaster.users.model.User;
+import org.feargus.springmaster.users.model.UserCreator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -16,21 +19,29 @@ public class AccountCreationCtrlr {
     private static final Logger log = LoggerFactory.getLogger(AccountCreationCtrlr.class);
 
     @RequestMapping(value = "/accountCreation", method = RequestMethod.GET)
-    public String getAccountCreation(AccountCreationForm accForm) {
+    public String getAccountCreation(User accForm) {
 	return "accountCreation";
     }
 
     @RequestMapping(value = "/accountCreation", method = RequestMethod.POST)
-    public String postAccountCreation(@Valid AccountCreationForm accForm, BindingResult bindingResult) {
-	UserAccModel userAccMdl = new UserAccModel();
+    public String postAccountCreation(@Valid User userObj, BindingResult bindingResult) {
+	UserCreator userCreator = new UserCreator();
 
 	if (bindingResult.hasErrors()) {
 	    return "accountCreation";
 	}
 
-	log.info("Creating an account: " + accForm.toString());
+	/* Add the user to the DB */
+	log.info("Creating an account: " + userObj.toString());
+	userCreator.createUserAcc(userObj);
 
-	userAccMdl.createUserAcc(accForm);
+	/* Email the user to confirm their account */
+	try {
+	    userCreator.emailUserConfirmation(userObj);
+	} catch (NoSuchAlgorithmException e) {
+	    log.info(e.getMessage());
+	    // TODO Error page or something here.....
+	}
 
 	return "redirect:/home";
     }
