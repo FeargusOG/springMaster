@@ -1,19 +1,32 @@
 package org.feargus.springmaster.users.controllers;
 
+import java.security.NoSuchAlgorithmException;
+
 import javax.validation.constraints.Size;
+
+import org.feargus.springmaster.crypto.UniqueTokenGenerator;
+import org.feargus.springmaster.crypto.UserPasswordUtils;
+import org.feargus.springmaster.utils.UtilVars;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class AccountCreationForm {
 
+    private String salt;
+    private String password = null;
+    private UserPasswordUtils userPswrdUtil;
+    private static final Logger log = LoggerFactory.getLogger(AccountCreationForm.class);
+
     @Size(min = 2, max = 255)
-    private String name;
+    private String name = null;
 
     @Size(min = 3, max = 255)
-    private String email;
+    private String email = null;
 
-    @Size(min = 3, max = 40)
-    private String password;
-
-    private String salt;
+    public AccountCreationForm() {
+	this.userPswrdUtil = new UserPasswordUtils();
+	this.salt = new UniqueTokenGenerator().getUniqueToken();
+    }
 
     public String getName() {
 	return this.name;
@@ -36,18 +49,21 @@ public class AccountCreationForm {
     }
 
     public void setPassword(String password) {
-	this.password = password;
+	try {
+	    String hashedPassword = userPswrdUtil.hashUserPassword(salt, password);
+	    this.password = hashedPassword;
+	} catch (NoSuchAlgorithmException e) {
+	    log.info(e.getMessage());
+	}
+
     }
 
     public String getSalt() {
 	return salt;
     }
 
-    public void setSalt(String salt) {
-	this.salt = salt;
-    }
-
     public String toString() {
-	return "Person(Name: " + this.name + ", Email: " + this.email + ")";
+	return "Person(" + UtilVars.PII_START + "Name: " + this.name + ", Email: " + this.email
+		+ UtilVars.PII_END + ")";
     }
 }

@@ -1,10 +1,11 @@
 package org.feargus.springmaster.users.model;
 
-import org.feargus.springmaster.crypto.UserPassword;
+import org.feargus.springmaster.crypto.UserPasswordUtils;
 import org.feargus.springmaster.model.PostgresqlDataSource;
 import org.feargus.springmaster.users.controllers.AccountCreationForm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -18,23 +19,21 @@ public class UserAccModel {
     }
 
     public void createUserAcc(AccountCreationForm userObj) {
-	UserPassword userPswrd = new UserPassword();
+	UserPasswordUtils userPswrdUtil = new UserPasswordUtils();
 
 	try {
-	    String hashedPassword = userPswrd.hashUserPassword(userObj.getSalt(), userObj.getPassword());
-	    log.info("Here is the hashed password before it goes in: " + hashedPassword);
-	    userObj.setPassword(hashedPassword);
 	    this.addUserToDB(userObj);
+
+	    boolean correctPswrd = userPswrdUtil.compareUserPassword(userObj.getEmail(), "passw0rd");
+	    log.info("Is this the correct password? " + Boolean.toString(correctPswrd));
 	} catch (DuplicateKeyException dupEx) {
-
+	    log.info(dupEx.getMessage());
 	} catch (Exception ex) {
-
+	    log.info(ex.getMessage());
 	}
-
-	userPswrd.compareUserPassword(userObj.getEmail(), userObj.getPassword());
     }
 
-    private void addUserToDB(AccountCreationForm userObj) {
+    private void addUserToDB(AccountCreationForm userObj) throws DataAccessException {
 	jdbcTemplate.update("INSERT INTO members(userName, email, salt, pswrd) VALUES (?,?,?,?)",
 		userObj.getName(), userObj.getEmail(), userObj.getSalt(), userObj.getPassword());
     }

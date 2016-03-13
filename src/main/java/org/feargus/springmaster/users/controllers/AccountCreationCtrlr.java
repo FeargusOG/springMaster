@@ -2,9 +2,7 @@ package org.feargus.springmaster.users.controllers;
 
 import javax.validation.Valid;
 
-import org.feargus.springmaster.crypto.UniqueTokenGenerator;
 import org.feargus.springmaster.users.model.UserAccModel;
-import org.feargus.springmaster.utils.UtilVars;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -30,12 +28,8 @@ public class AccountCreationCtrlr {
 	    return "accountCreation";
 	}
 
-	log.info("Creating an account " + UtilVars.PII_START + "[user=" + accForm.getName() + ", email="
-		+ accForm.getEmail() + "]" + UtilVars.PII_END);
+	log.info("Creating an account: " + accForm.toString());
 
-	accForm.setSalt(new UniqueTokenGenerator().getUniqueToken());
-	// TODO start back here working out how to use the salt and then
-	// authenticate a user...
 	userAccMdl.createUserAcc(accForm);
 
 	return "redirect:/home";
