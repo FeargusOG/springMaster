@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @EnableAutoConfiguration(exclude = { DataSourceAutoConfiguration.class })
+// , SecurityAutoConfiguration.class })
 @ComponentScan
 // @SpringBootApplication //This annotation is the same as the other three put
 // together

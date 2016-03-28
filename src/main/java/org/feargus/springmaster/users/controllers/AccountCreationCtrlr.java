@@ -20,13 +20,14 @@ public class AccountCreationCtrlr {
 
     @RequestMapping(value = "/accountCreation", method = RequestMethod.GET)
     public String getAccountCreation(User accForm) {
+	log.info("Made it to here in get...");
 	return "accountCreation";
     }
 
     @RequestMapping(value = "/accountCreation", method = RequestMethod.POST)
     public String postAccountCreation(@Valid User userObj, BindingResult bindingResult) {
 	UserCreator userCreator = new UserCreator();
-
+	log.info("Made it to here in post...");
 	if (bindingResult.hasErrors()) {
 	    return "accountCreation";
 	}
@@ -43,6 +44,6 @@ public class AccountCreationCtrlr {
 	    // TODO Error page or something here.....
 	}
 
-	return "redirect:/home";
+	return "redirect:/index";
     }
 }
