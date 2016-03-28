@@ -34,6 +34,9 @@
                 <tr>
                     <td><button type="submit">Submit</button></td>
                 </tr>
+                <tr>
+                	<td><input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" /></td>
+                </tr>
             </table>
             <script type="text/javascript">
             	function validateUserForm(){

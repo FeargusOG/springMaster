@@ -13,8 +13,7 @@ import org.springframework.context.annotation.Configuration;
 @EnableAutoConfiguration(exclude = { DataSourceAutoConfiguration.class })
 // , SecurityAutoConfiguration.class })
 @ComponentScan
-// @SpringBootApplication //This annotation is the same as the other three put
-// together
+// @SpringBootApplication //same as other three put together
 public class Application implements CommandLineRunner {
 
     private static final Logger log = LoggerFactory.getLogger(Application.class);

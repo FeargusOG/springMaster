@@ -3,6 +3,8 @@ package org.feargus.springmaster.model;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import javax.sql.DataSource;
+
 import org.apache.commons.dbcp.BasicDataSource;
 import org.feargus.springmaster.utils.SystemVars;
 
@@ -19,7 +21,7 @@ public class PostgresqlDataSource {
 	dbPassword = null;
     }
 
-    public BasicDataSource getDefaultDataSource() {
+    public DataSource getDefaultDataSource() {
 	URI dbUri;
 	try {
 	    dbUri = new URI(System.getenv(SystemVars.dbUrl));
