@@ -1,0 +1,1 @@
+> We possibly need to add permitAll() to all css, javascript, image files etc.

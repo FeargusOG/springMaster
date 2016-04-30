@@ -1,5 +1,7 @@
 package org.feargus.springmaster.security;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -15,9 +17,11 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-
+    private static final Logger log = LoggerFactory.getLogger(SecurityConfig.class);
+    
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+	log.info("Came into here to auth the user.");
 	auth.inMemoryAuthentication().withUser("user").password("password").roles("USER");
     }
 
