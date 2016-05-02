@@ -40,7 +40,8 @@ public class User {
     }
 
     public void setEmail(String email) {
-	this.email = email;
+	String lowerCaseEmail = email.toLowerCase();
+	this.email = lowerCaseEmail;
     }
 
     public String getPassword() {

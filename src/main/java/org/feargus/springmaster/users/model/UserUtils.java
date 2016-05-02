@@ -59,12 +59,23 @@ public class UserUtils {
 	jdbcTemplate.update("UPDATE members SET active='t' WHERE email=?", userEmail);
     }
 
-    private String selectPasswordFromDB(String userEmail) throws DataAccessException {
+    public boolean selectActiveFromDB(String userEmail) throws DataAccessException {
+	String isActive = (String) this.jdbcTemplate.queryForObject(
+		"SELECT active from members WHERE email= ?", new Object[] { userEmail }, String.class);
+	log.info("\n\nIn UserUtils, here is the active: " + isActive);
+	if (isActive.equals("t")) {
+	    return true;
+	} else {
+	    return false;
+	}
+    }
+
+    public String selectPasswordFromDB(String userEmail) throws DataAccessException {
 	return (String) this.jdbcTemplate.queryForObject("SELECT pswrd from members WHERE email= ?",
 		new Object[] { userEmail }, String.class);
     }
 
-    private String selectSaltFromDB(String userEmail) throws DataAccessException {
+    public String selectSaltFromDB(String userEmail) throws DataAccessException {
 	return (String) this.jdbcTemplate.queryForObject("SELECT salt from members WHERE email= ?",
 		new Object[] { userEmail }, String.class);
     }
