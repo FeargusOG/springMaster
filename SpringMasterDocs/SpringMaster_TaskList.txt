@@ -1,1 +1,13 @@
-> We possibly need to add permitAll() to all css, javascript, image files etc.
+Task List:
+	> Get the user to authenticate from postgres, not the default in-memory one.
+	> Autowire the DataSource and Logging
+	> We possibly need to add permitAll() to all css, javascript, image files etc.
+
+Captain's Log:
+	> 30/04/16 (Shrewsbury)
+		> Added the MvcConfig class so I had a ctrl for login.html (wasn't sure what my own ctrl should look like, with redirects etc. 		Might change this at some point.)
+		> Added the hidden csrf token field to the login form.
+		> Pushed these changed to feargus.org as a new master.
+
+	> 2/05/16 (Starbucks, Waterloo Road)
+		> Added a 403 cntrlr and page
