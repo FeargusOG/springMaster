@@ -5,9 +5,11 @@ Task List:
 
 Captain's Log:
 	> 30/04/16 (Shrewsbury)
-		> Added the MvcConfig class so I had a ctrl for login.html (wasn't sure what my own ctrl should look like, with redirects etc. 		Might change this at some point.)
+		> Added the MvcConfig class so I had a ctrl for login.html (wasn't sure what my own ctrl should look like, with redirects etc. Might change this at some point.)
 		> Added the hidden csrf token field to the login form.
 		> Pushed these changed to feargus.org as a new master.
 
 	> 2/05/16 (Starbucks, Waterloo Road)
 		> Added a 403 cntrlr and page
+		> Added a lot of code for performing custom jdbc authentication. Overall, it went well but supplying your own salt to the DaoAuthenticationProvider PasswordEncoder is now deprecated. However, I decided to use the deprecated version so that I can continue to use my custom salt.
+		> Added lowerCase conversion when taking in user emails (so lowercase is stored in db).
