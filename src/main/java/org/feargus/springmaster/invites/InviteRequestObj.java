@@ -1,4 +1,4 @@
-package org.feargus.springmaster.invites.models;
+package org.feargus.springmaster.invites;
 
 import java.util.ArrayList;
 

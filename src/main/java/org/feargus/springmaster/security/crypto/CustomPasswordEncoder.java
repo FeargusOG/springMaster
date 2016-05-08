@@ -1,4 +1,4 @@
-package org.feargus.springmaster.crypto;
+package org.feargus.springmaster.security.crypto;
 
 import java.security.NoSuchAlgorithmException;
 

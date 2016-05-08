@@ -1,4 +1,4 @@
-package org.feargus.springmaster.controllers;
+package org.feargus.springmaster.web.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

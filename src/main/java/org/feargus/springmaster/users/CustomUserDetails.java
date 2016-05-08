@@ -1,4 +1,4 @@
-package org.feargus.springmaster.users.model;
+package org.feargus.springmaster.users;
 
 import java.util.Collection;
 

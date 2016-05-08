@@ -1,6 +1,6 @@
 package org.feargus.springmaster.invites.controllers;
 
-import org.feargus.springmaster.invites.models.InviteRequestObj;
+import org.feargus.springmaster.invites.InviteRequestObj;
 import org.feargus.springmaster.mail.Mailer;
 import org.feargus.springmaster.utils.SystemVars;
 import org.feargus.springmaster.utils.UtilVars;

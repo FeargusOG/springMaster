@@ -1,9 +1,9 @@
-package org.feargus.springmaster.users.model;
+package org.feargus.springmaster.users;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
-import org.feargus.springmaster.security.CustomGrantedAuthority;
+import org.feargus.springmaster.security.auth.CustomGrantedAuthority;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.userdetails.UserDetails;

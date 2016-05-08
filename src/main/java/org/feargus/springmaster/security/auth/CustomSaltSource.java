@@ -1,6 +1,6 @@
-package org.feargus.springmaster.security;
+package org.feargus.springmaster.security.auth;
 
-import org.feargus.springmaster.users.model.UserUtils;
+import org.feargus.springmaster.users.UserUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.dao.SaltSource;

@@ -1,10 +1,10 @@
-package org.feargus.springmaster.users.model;
+package org.feargus.springmaster.users;
 
 import java.security.NoSuchAlgorithmException;
 
 import javax.validation.constraints.Size;
 
-import org.feargus.springmaster.crypto.UniqueTokenGenerator;
+import org.feargus.springmaster.security.crypto.UniqueTokenGenerator;
 import org.feargus.springmaster.utils.UtilVars;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

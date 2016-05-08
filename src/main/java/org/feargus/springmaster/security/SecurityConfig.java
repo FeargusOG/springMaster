@@ -2,9 +2,10 @@ package org.feargus.springmaster.security;
 
 import javax.sql.DataSource;
 
-import org.feargus.springmaster.crypto.CustomPasswordEncoder;
-import org.feargus.springmaster.model.PostgresqlDataSource;
-import org.feargus.springmaster.users.model.CustomUserDetailsService;
+import org.feargus.springmaster.db.PostgresqlDataSource;
+import org.feargus.springmaster.security.auth.CustomSaltSource;
+import org.feargus.springmaster.security.crypto.CustomPasswordEncoder;
+import org.feargus.springmaster.users.CustomUserDetailsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

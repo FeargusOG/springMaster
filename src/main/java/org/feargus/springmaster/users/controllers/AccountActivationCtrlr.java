@@ -2,7 +2,7 @@ package org.feargus.springmaster.users.controllers;
 
 import java.security.NoSuchAlgorithmException;
 
-import org.feargus.springmaster.users.model.UserUtils;
+import org.feargus.springmaster.users.UserUtils;
 import org.feargus.springmaster.utils.UtilVars;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,4 +1,4 @@
-package org.feargus.springmaster.invites.view;
+package org.feargus.springmaster.invites;
 
 import java.sql.Date;
 

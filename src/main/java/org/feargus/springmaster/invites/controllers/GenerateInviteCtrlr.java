@@ -1,8 +1,8 @@
 package org.feargus.springmaster.invites.controllers;
 
-import org.feargus.springmaster.crypto.UniqueTokenGenerator;
+import org.feargus.springmaster.db.PostgresqlDataSource;
 import org.feargus.springmaster.mail.Mailer;
-import org.feargus.springmaster.model.PostgresqlDataSource;
+import org.feargus.springmaster.security.crypto.UniqueTokenGenerator;
 import org.feargus.springmaster.utils.SystemVars;
 import org.feargus.springmaster.utils.UtilVars;
 import org.slf4j.Logger;

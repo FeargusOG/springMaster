@@ -4,8 +4,8 @@ import java.security.NoSuchAlgorithmException;
 
 import javax.validation.Valid;
 
-import org.feargus.springmaster.users.model.User;
-import org.feargus.springmaster.users.model.UserCreator;
+import org.feargus.springmaster.users.User;
+import org.feargus.springmaster.users.UserCreator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;

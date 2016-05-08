@@ -1,4 +1,4 @@
-package org.feargus.springmaster.model;
+package org.feargus.springmaster.db;
 
 import java.net.URI;
 import java.net.URISyntaxException;

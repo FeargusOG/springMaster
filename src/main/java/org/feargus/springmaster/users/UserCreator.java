@@ -1,9 +1,9 @@
-package org.feargus.springmaster.users.model;
+package org.feargus.springmaster.users;
 
 import java.security.NoSuchAlgorithmException;
 
+import org.feargus.springmaster.db.PostgresqlDataSource;
 import org.feargus.springmaster.mail.Mailer;
-import org.feargus.springmaster.model.PostgresqlDataSource;
 import org.feargus.springmaster.utils.SystemVars;
 import org.feargus.springmaster.utils.UtilVars;
 import org.slf4j.Logger;

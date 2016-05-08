@@ -1,9 +1,9 @@
-package org.feargus.springmaster.users.model;
+package org.feargus.springmaster.users;
 
 import java.security.NoSuchAlgorithmException;
 
-import org.feargus.springmaster.crypto.StringHasher;
-import org.feargus.springmaster.model.PostgresqlDataSource;
+import org.feargus.springmaster.db.PostgresqlDataSource;
+import org.feargus.springmaster.security.crypto.StringHasher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;

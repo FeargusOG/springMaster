@@ -1,5 +1,6 @@
 Task List:
-	> Get the user to authenticate from postgres, not the default in-memory one.
+	> Now its time to refactor the code....
+	> Add in Unit Tests
 	> Autowire the DataSource and Logging
 	> We possibly need to add permitAll() to all css, javascript, image files etc.
 
