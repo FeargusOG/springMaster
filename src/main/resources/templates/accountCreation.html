@@ -1,53 +1,57 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
-    <head>
-        <title>Spring Security Example</title>
-    </head>
-    <body>
-        <h1>Create your account here!</h1>
-                       
-        <form action="#" th:action="@{/accountCreation}" th:object="${user}" onsubmit="return validateUserForm()" method="post">
-            <table>
-                <tr>
-                    <td>Name:</td>
-                    <td><input type="text" th:field="*{name}" /></td>
-                    <td th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</td>
-                </tr>
-                <tr>
-                    <td>Email:</td>
-                    <td><input name="email" id="email1" type="text" th:field="*{email}" /></td>
-                    <td th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Age Error</td>
-                </tr>
-                <tr>
-                    <td>Confirm Email:</td>
-                    <td><input name="confirmEmail" id="email2" type="text" /></td>
-                </tr>
-                <tr>
-                    <td>Password:</td>
-                    <td><input name="password" id="pwrd1" type="password" th:field="*{password}" /></td>
-                    <td th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Age Error</td>
-                </tr>
-                <tr>
-                    <td>Confirm Password:</td>
-                    <td><input name="confirmPassword" id="pwrd2" type="password" /></td>
-                </tr>
-                <tr>
-                    <td><button type="submit">Submit</button></td>
-                </tr>
-                <tr>
-                	<td><input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" /></td>
-                </tr>
-            </table>
-            <script type="text/javascript">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<title>Spring Security Example</title>
+</head>
+<body>
+	<h1>Create your account here!</h1>
+
+	<form action="#" th:action="@{/accountCreation}" th:object="${customUserDetails}" onsubmit="return validateUserForm()" method="post">
+		<div>
+			<label for="usernameId">Username: </label> 
+			<input type="text" id="usernameId" name="username" th:field="*{userHandle}" />
+			<div th:if="${#fields.hasErrors('userHandle')}" th:errors="*{userHandle}">Name Error </div>
+		</div>
+		<div>
+			<label for="emailId1">Email: </label>
+			<input type="text" id="emailId1" name="email1" th:field="*{userNameEmail}" />
+			<div th:if="${#fields.hasErrors('userNameEmail')}" th:errors="*{userNameEmail}">Email Error</div>
+		</div>
+		<div>
+			<label for="emailId2">Confirm Email: </label>
+			<input type="text" id="emailId2" name="email2" />
+		</div>
+		<div>
+			<label for="pswrdId1">Password: </label>
+			<input type="password" id="pswrdId1" name="pswrd1" th:field="*{nonSaltedUserPassword}" />
+			<div th:if="${#fields.hasErrors('nonSaltedUserPassword')}" th:errors="*{nonSaltedUserPassword}">Password Error</div>
+		</div>
+		<div>
+			<label for="pswrdId2">Confirm Password: </label>
+			<input type="password" id="pswrdId2" name="pswrd2" />
+		</div>
+		<div>
+			<button type="submit">Submit</button>
+		</div>
+		<div>
+			<input type="hidden" th:name="${_csrf.parameterName}"
+				th:value="${_csrf.token}" />
+		</div>
+		<script type="text/javascript">
             	function validateUserForm(){
-            		var status = true;
-            		status = validateEmail();
-            		status = validatePwrd();
-            		return status;
+            		var statusEmail = validateEmail();
+            		var statusPswrd = validatePswrd();
+            		if(!statusEmail || !statusPswrd){
+            			return false;
+            		} else {
+            			return true;
+            		}
             	}
 	            function validateEmail() {
-	                var email1 = document.getElementById("email1").value;
-	                var email2 = document.getElementById("email2").value;
+	                var email1 = document.getElementById("emailId1").value;
+	                var email2 = document.getElementById("emailId2").value;
 	                var ok = true;
 	             	
 	                if(!email1 || !email2){
@@ -56,16 +60,16 @@
 	                } else {
 	                	if (email1 != email2) {
 		                    alert("The emails provided do not match!\n");
-		                    document.getElementById("email1").style.borderColor = "#E34234";
-		                    document.getElementById("email2").style.borderColor = "#E34234";
+		                    document.getElementById("emailId1").style.borderColor = "#E34234";
+		                    document.getElementById("emailId2").style.borderColor = "#E34234";
 		                    ok = false;
 		                }
 	                }
 	                return ok;
 	            }
-	            function validatePwrd() {
-	                var pwrd1 = document.getElementById("pwrd1").value;
-	                var pwrd2 = document.getElementById("pwrd2").value;
+	            function validatePswrd() {
+	                var pwrd1 = document.getElementById("pswrdId1").value;
+	                var pwrd2 = document.getElementById("pswrdId2").value;
 	                var ok = true;
 	                
 	                if(!pwrd1 || !pwrd2){
@@ -74,14 +78,14 @@
 	                } else {
 	                	if (pwrd1 != pwrd2) {
 		                    alert("The password provided do not match!\n");
-		                    document.getElementById("pwrd1").style.borderColor = "#E34234";
-		                    document.getElementById("pwrd2").style.borderColor = "#E34234";
+		                    document.getElementById("pswrdId1").style.borderColor = "#E34234";
+		                    document.getElementById("pswrdId2").style.borderColor = "#E34234";
 		                    ok = false;
 		                }
 	                }
 	                return ok;
 	            }
             </script>
-        </form>
-    </body>
+	</form>
+</body>
 </html>

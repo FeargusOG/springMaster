@@ -4,32 +4,36 @@ import java.security.NoSuchAlgorithmException;
 
 import org.feargus.springmaster.db.PostgresqlDataSource;
 import org.feargus.springmaster.security.crypto.StringHasher;
+import org.feargus.springmaster.security.crypto.UniqueTokenGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-public class UserUtils {
+public class UserAccUtils {
     private JdbcTemplate jdbcTemplate;
     private StringHasher stringHasher;
-    private static final Logger log = LoggerFactory.getLogger(UserUtils.class);
+    private static final Logger log = LoggerFactory.getLogger(UserAccUtils.class);
 
-    public UserUtils() {
+    public UserAccUtils() {
 	PostgresqlDataSource psqlDataSource = new PostgresqlDataSource();
 	this.jdbcTemplate = new JdbcTemplate(psqlDataSource.getDefaultDataSource());
 	this.stringHasher = new StringHasher();
     }
 
     public String hashUserPassword(String salt, String pswrd) throws NoSuchAlgorithmException {
-	String hashedPassword = stringHasher.hashThisString(combineSalt(salt, pswrd));
-	log.info("HashedPassword: " + hashedPassword);
-	return hashedPassword;
+	return stringHasher.hashThisString(combineSalt(salt, pswrd));
     }
 
+    /*
+     * We will hash the user email for sending an acc confirmation link. This is
+     * because if we used the raw email as a parameter in the link, then a user
+     * could create accounts for other users and then confirm them themselves by
+     * adding this email parameter to the url. By hashing it, they would need
+     * access to the salt and hashing algorithm to mimic it.
+     */
     public String hashUserEmail(String salt, String userEmail) throws NoSuchAlgorithmException {
-	String hashedEmail = stringHasher.hashThisString(combineSalt(salt, userEmail));
-	log.info("HashedEmail: " + hashedEmail);
-	return hashedEmail;
+	return stringHasher.hashThisString(combineSalt(salt, userEmail));
     }
 
     public boolean compareHashedPassword(String userEmail, String inputHashedPswrd)
@@ -82,5 +86,9 @@ public class UserUtils {
 
     private String combineSalt(String salt, String inputString) {
 	return salt + inputString;
+    }
+
+    public String generateSalt() {
+	return new UniqueTokenGenerator().getUniqueToken();
     }
 }

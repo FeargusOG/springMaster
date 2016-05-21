@@ -2,35 +2,83 @@ package org.feargus.springmaster.users;
 
 import java.util.Collection;
 
+import javax.validation.constraints.Size;
+
+import org.feargus.springmaster.utils.UtilVars;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 public class CustomUserDetails implements UserDetails {
-    /**
-     * default generated serial
-     */
     private static final long serialVersionUID = -8200771636764034343L;
     private Collection<? extends GrantedAuthority> userAuthorities;
-    private String userPassword;
-    private String userEmail;
-    private boolean userActive;
 
+    @Size(min = 2, max = 255)
+    private String userNameEmail;
+
+    @Size(min = 3, max = 255)
+    private String userHandle;
+
+    private transient String salt;
+    private transient String saltedUserPassword;
+    private transient String nonSaltedUserPassword;
+    private boolean userActive;
+    private boolean userNonExpired;
+    private boolean userNonLocked;
+    private boolean userCredsNonExpired;
+
+    public CustomUserDetails() {
+	this.userActive = false;
+	this.userNonExpired = false;
+	this.userNonLocked = false;
+	this.userCredsNonExpired = false;
+    }
+
+    /* Setters */
     public void setUserAuthorities(Collection<? extends GrantedAuthority> userAuthorities) {
 	this.userAuthorities = userAuthorities;
     }
 
-    public void setUserPassword(String userPassword) {
-	this.userPassword = userPassword;
+    public void setPassword(String userPassword) {
+	this.saltedUserPassword = userPassword;
     }
 
-    public void setUserEmail(String userEmail) {
-	this.userEmail = userEmail;
+    public void setNonSaltedUserPassword(String nonSaltedUserPassword) {
+	this.nonSaltedUserPassword = nonSaltedUserPassword;
+    }
+
+    public void setSalt(String salt) {
+	this.salt = salt;
+    }
+
+    public void setUsername(String userNameEmail) {
+	this.setUserNameEmail(userNameEmail);
+    }
+
+    public void setUserNameEmail(String userNameEmail) {
+	this.userNameEmail = userNameEmail;
+    }
+
+    public void setUserHandle(String userHandle) {
+	this.userHandle = userHandle;
     }
 
     public void setUserActive(boolean userActive) {
 	this.userActive = userActive;
     }
 
+    public void setUserNonExpired(boolean userNonExpired) {
+	this.userNonExpired = userNonExpired;
+    }
+
+    public void setUserNonLocked(boolean userNonLocked) {
+	this.userNonLocked = userNonLocked;
+    }
+
+    public void setUserCredsNonExpired(boolean userCredsNonExpired) {
+	this.userCredsNonExpired = userCredsNonExpired;
+    }
+
+    /* Getters */
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
 	return this.userAuthorities;
@@ -38,32 +86,54 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public String getPassword() {
-	return this.userPassword;
+	return this.saltedUserPassword;
+    }
+
+    public String getNonSaltedUserPassword() {
+	return nonSaltedUserPassword;
+    }
+
+    public String getSalt() {
+	return salt;
     }
 
     @Override
     public String getUsername() {
-	return this.userEmail;
+	return this.getUserNameEmail();
     }
 
-    @Override
-    public boolean isAccountNonExpired() {
-	return true; // true is not expired
+    public String getUserNameEmail() {
+	return this.userNameEmail;
     }
 
-    @Override
-    public boolean isAccountNonLocked() {
-	return true; // true is not locked
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-	return true; // true is not expired
+    public String getUserHandle() {
+	return userHandle;
     }
 
     @Override
     public boolean isEnabled() {
 	return this.userActive;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+	return this.userNonExpired; // true is not expired
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+	return this.userNonLocked; // true is not locked
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+	return this.userCredsNonExpired; // true is not expired
+    }
+
+    /* General Functions */
+    public String toString() {
+	return "Member(" + UtilVars.PII_START + "Handle: " + this.userHandle + ", Email: "
+		+ this.userNameEmail + UtilVars.PII_END + ")";
     }
 
 }

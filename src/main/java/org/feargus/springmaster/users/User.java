@@ -13,7 +13,7 @@ public class User {
 
     private String salt;
     private String password = null;
-    private UserUtils userPswrdUtil;
+    private UserAccUtils userPswrdUtil;
     private static final Logger log = LoggerFactory.getLogger(User.class);
 
     @Size(min = 2, max = 255)
@@ -23,7 +23,7 @@ public class User {
     private String email = null;
 
     public User() {
-	this.userPswrdUtil = new UserUtils();
+	this.userPswrdUtil = new UserAccUtils();
 	this.salt = new UniqueTokenGenerator().getUniqueToken();
     }
 

@@ -1,8 +1,19 @@
 Task List:
+	> I changed the tables locally, but not in Heroku!! Also, didn't add back in a user role or invite table.
+		> For the user role table, maybe use an enum....
+	> The account creation is working, no work on the account confirmation.
 	> Now its time to refactor the code....
+	> Remove junk from github for this project
+	> Add in error pages....
 	> Add in Unit Tests
 	> Autowire the DataSource and Logging
+	> Add some basic UI
+	> Move script to correct place in accountCreation.html file
 	> We possibly need to add permitAll() to all css, javascript, image files etc.
+
+Bugs:
+	> The boxes in accountcreation stay highlighted red, even if you fix them and some other one causes a problem.
+	
 
 Captain's Log:
 	> 30/04/16 (Shrewsbury)
@@ -14,3 +25,6 @@ Captain's Log:
 		> Added a 403 cntrlr and page
 		> Added a lot of code for performing custom jdbc authentication. Overall, it went well but supplying your own salt to the DaoAuthenticationProvider PasswordEncoder is now deprecated. However, I decided to use the deprecated version so that I can continue to use my custom salt.
 		> Added lowerCase conversion when taking in user emails (so lowercase is stored in db).
+
+	21/05/16 (Starbucks, Waterloo Road)
+		> Got the user acc creation form and backend working with the new CustomUserDetails class

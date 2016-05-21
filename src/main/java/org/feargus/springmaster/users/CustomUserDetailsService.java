@@ -12,10 +12,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 public class CustomUserDetailsService implements UserDetailsService {
     private static final Logger log = LoggerFactory.getLogger(CustomUserDetailsService.class);
-    private UserUtils userUtils;
+    private UserAccUtils userUtils;
 
     public CustomUserDetailsService() {
-	this.userUtils = new UserUtils();
+	this.userUtils = new UserAccUtils();
     }
 
     @Override
@@ -29,9 +29,9 @@ public class CustomUserDetailsService implements UserDetailsService {
 	authList.add(grantedAuth);
 
 	customUserDetails.setUserAuthorities(authList);
-	customUserDetails.setUserEmail(lowerCaseEmail);
+	customUserDetails.setUsername(lowerCaseEmail);
 	customUserDetails.setUserActive(this.userUtils.selectActiveFromDB(lowerCaseEmail));
-	customUserDetails.setUserPassword(this.userUtils.selectPasswordFromDB(lowerCaseEmail));
+	customUserDetails.setPassword(this.userUtils.selectPasswordFromDB(lowerCaseEmail));
 
 	log.info("\n\n\tHere is the password: " + customUserDetails.getPassword());
 	log.info("\n\n\tHere is the active: " + customUserDetails.isEnabled());

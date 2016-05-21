@@ -2,7 +2,7 @@ package org.feargus.springmaster.users.controllers;
 
 import java.security.NoSuchAlgorithmException;
 
-import org.feargus.springmaster.users.UserUtils;
+import org.feargus.springmaster.users.UserAccUtils;
 import org.feargus.springmaster.utils.UtilVars;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,7 +22,7 @@ public class AccountActivationCtrlr {
 
 	boolean correctToken = false;
 	/* Compare this email and token to the DB entries */
-	UserUtils userUtils = new UserUtils();
+	UserAccUtils userUtils = new UserAccUtils();
 	try {
 	    correctToken = userUtils.compareHashedEmail(userEmail, token);
 	} catch (NoSuchAlgorithmException e) {

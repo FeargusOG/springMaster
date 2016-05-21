@@ -1,11 +1,9 @@
 package org.feargus.springmaster.users.controllers;
 
-import java.security.NoSuchAlgorithmException;
-
 import javax.validation.Valid;
 
-import org.feargus.springmaster.users.User;
-import org.feargus.springmaster.users.UserCreator;
+import org.feargus.springmaster.users.CustomUserDetails;
+import org.feargus.springmaster.users.UserAccCreator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -19,29 +17,45 @@ public class AccountCreationCtrlr {
     private static final Logger log = LoggerFactory.getLogger(AccountCreationCtrlr.class);
 
     @RequestMapping(value = "/accountCreation", method = RequestMethod.GET)
-    public String getAccountCreation(User accForm) {
-	log.info("Made it to here in get...");
+    public String getAccountCreation(CustomUserDetails userDetails) {
+	/*
+	 * The form will look for the class name CustomUserDetails with the
+	 * first letter lowercase - customUserDetails. That's how it
+	 * automatically finds the binding. Otherwise, I think you can specify
+	 * modelAttribute if you want a different name to be used for the
+	 * variable in the form.
+	 */
+
 	return "accountCreation";
     }
 
     @RequestMapping(value = "/accountCreation", method = RequestMethod.POST)
-    public String postAccountCreation(@Valid User userObj, BindingResult bindingResult) {
-	UserCreator userCreator = new UserCreator();
-	log.info("Made it to here in post...");
+    public String postAccountCreation(@Valid CustomUserDetails userObj, BindingResult bindingResult) {
+
+	/* Check that the userObj had no errors */
 	if (bindingResult.hasErrors()) {
 	    return "accountCreation";
 	}
 
 	/* Add the user to the DB */
-	log.info("Creating an account: " + userObj.toString());
-	userCreator.createUserAcc(userObj);
+	UserAccCreator userAccCreator = new UserAccCreator();
+	try {
+	    userAccCreator.createUserAcc(userObj);
+	    log.info("Sucessfuly created an account for: " + userObj.toString());
+	} catch (Exception e) {
+	    log.info("Failed to create an account for: " + userObj.toString());
+	    log.info(e.getMessage());
+	    return "redirect:/error";// TODO Error page or something here.....
+	}
 
 	/* Email the user to confirm their account */
 	try {
-	    userCreator.emailUserConfirmation(userObj);
-	} catch (NoSuchAlgorithmException e) {
+	    userAccCreator.emailUserConfirmation(userObj);
+	    log.info("Sucessfuly emailed user for account confirm: " + userObj.toString());
+	} catch (Exception e) {
+	    log.info("Failed to email user for account confirm: " + userObj.toString());
 	    log.info(e.getMessage());
-	    // TODO Error page or something here.....
+	    return "redirect:/error";// TODO Error page or something here.....
 	}
 
 	return "redirect:/index";
