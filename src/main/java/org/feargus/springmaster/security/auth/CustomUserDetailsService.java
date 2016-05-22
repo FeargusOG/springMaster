@@ -1,9 +1,10 @@
-package org.feargus.springmaster.users;
+package org.feargus.springmaster.security.auth;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
-import org.feargus.springmaster.security.auth.CustomGrantedAuthority;
+import org.feargus.springmaster.users.CustomUserDetails;
+import org.feargus.springmaster.users.UserAccUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,13 +25,13 @@ public class CustomUserDetailsService implements UserDetailsService {
 	String lowerCaseEmail = userEmail.toLowerCase();
 	log.info("\n\n\tLoading user for email: " + lowerCaseEmail);
 
-	CustomGrantedAuthority grantedAuth = new CustomGrantedAuthority("ADMIN");
+	CustomGrantedAuthority grantedAuth = new CustomGrantedAuthority("USER");
 	Collection<CustomGrantedAuthority> authList = new ArrayList<CustomGrantedAuthority>();
 	authList.add(grantedAuth);
 
 	customUserDetails.setUserAuthorities(authList);
 	customUserDetails.setUsername(lowerCaseEmail);
-	customUserDetails.setUserActive(this.userUtils.selectActiveFromDB(lowerCaseEmail));
+	customUserDetails.setUserActive(this.userUtils.selectIsActiveFromDB(lowerCaseEmail));
 	customUserDetails.setPassword(this.userUtils.selectPasswordFromDB(lowerCaseEmail));
 
 	log.info("\n\n\tHere is the password: " + customUserDetails.getPassword());

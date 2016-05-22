@@ -21,6 +21,7 @@ public class CustomUserDetails implements UserDetails {
     private transient String salt;
     private transient String saltedUserPassword;
     private transient String nonSaltedUserPassword;
+    private int userId;
     private boolean userActive;
     private boolean userNonExpired;
     private boolean userNonLocked;
@@ -28,9 +29,9 @@ public class CustomUserDetails implements UserDetails {
 
     public CustomUserDetails() {
 	this.userActive = false;
-	this.userNonExpired = false;
-	this.userNonLocked = false;
-	this.userCredsNonExpired = false;
+	this.userNonExpired = true;
+	this.userNonLocked = true;
+	this.userCredsNonExpired = true;
     }
 
     /* Setters */
@@ -60,6 +61,10 @@ public class CustomUserDetails implements UserDetails {
 
     public void setUserHandle(String userHandle) {
 	this.userHandle = userHandle;
+    }
+
+    public void setUserId(int userId) {
+	this.userId = userId;
     }
 
     public void setUserActive(boolean userActive) {
@@ -108,6 +113,10 @@ public class CustomUserDetails implements UserDetails {
 
     public String getUserHandle() {
 	return userHandle;
+    }
+
+    public int getUserId() {
+	return userId;
     }
 
     @Override

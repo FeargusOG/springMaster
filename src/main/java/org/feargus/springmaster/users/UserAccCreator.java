@@ -3,14 +3,14 @@ package org.feargus.springmaster.users;
 import java.security.NoSuchAlgorithmException;
 
 import org.feargus.springmaster.db.PostgresqlDataSource;
+import org.feargus.springmaster.db.SqlStmts;
 import org.feargus.springmaster.mail.Mailer;
 import org.feargus.springmaster.utils.SystemVars;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 public class UserAccCreator {
-    private final String INSERT_USER_SQL = "INSERT INTO members(userHandle, userNameEmail, salt, pswrd, "
-	    + "accActive, accNonExpired, accNonLocked, credNonExpired) VALUES (?,?,?,?,?,?,?,?)";
+
     private UserAccUtils userUtils;
     private JdbcTemplate jdbcTemplate;
 
@@ -31,9 +31,9 @@ public class UserAccCreator {
     }
 
     private void addUserToDB(CustomUserDetails user) throws DataAccessException {
-	jdbcTemplate.update(INSERT_USER_SQL, user.getUserHandle(), user.getUserNameEmail(), user.getSalt(),
-		user.getPassword(), user.isEnabled(), user.isAccountNonExpired(), user.isAccountNonLocked(),
-		user.isCredentialsNonExpired());
+	jdbcTemplate.update(SqlStmts.INSERT_USER_SQL, user.getUserHandle(), user.getUserNameEmail(),
+		user.getSalt(), user.getPassword(), user.isEnabled(), user.isAccountNonExpired(),
+		user.isAccountNonLocked(), user.isCredentialsNonExpired());
     }
 
     public void emailUserConfirmation(CustomUserDetails userObj) throws NoSuchAlgorithmException {

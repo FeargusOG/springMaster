@@ -4,6 +4,8 @@ import javax.validation.Valid;
 
 import org.feargus.springmaster.users.CustomUserDetails;
 import org.feargus.springmaster.users.UserAccCreator;
+import org.feargus.springmaster.users.UserAccUtils;
+import org.feargus.springmaster.users.UserRoleCreator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -37,13 +39,24 @@ public class AccountCreationCtrlr {
 	    return "accountCreation";
 	}
 
-	/* Add the user to the DB */
+	/* Create an account for the user */
 	UserAccCreator userAccCreator = new UserAccCreator();
 	try {
 	    userAccCreator.createUserAcc(userObj);
 	    log.info("Sucessfuly created an account for: " + userObj.toString());
 	} catch (Exception e) {
 	    log.info("Failed to create an account for: " + userObj.toString());
+	    log.info(e.getMessage());
+	    return "redirect:/error";// TODO Error page or something here.....
+	}
+
+	/* Add a USER role for this user */
+	UserRoleCreator userRoleCreator = new UserRoleCreator();
+	try {
+	    userRoleCreator.addRoleForUser(userObj.getUserNameEmail(), UserAccUtils.ROLE_USER);
+	    log.info("Succesfully added a User role for account: " + userObj.toString());
+	} catch (Exception e) {
+	    log.info("Failed to add a User role for account: " + userObj.toString());
 	    log.info(e.getMessage());
 	    return "redirect:/error";// TODO Error page or something here.....
 	}

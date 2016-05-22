@@ -1,7 +1,5 @@
 package org.feargus.springmaster.users.controllers;
 
-import java.security.NoSuchAlgorithmException;
-
 import org.feargus.springmaster.users.UserAccUtils;
 import org.feargus.springmaster.utils.UtilVars;
 import org.slf4j.Logger;
@@ -19,17 +17,17 @@ public class AccountActivationCtrlr {
     @RequestMapping(value = "/accountActivation", method = RequestMethod.GET)
     public String getAccountActivation(@RequestParam(value = "userEmail", required = true) String userEmail,
 	    @RequestParam(value = "token", required = true) String token, Model model) {
-
 	boolean correctToken = false;
+
 	/* Compare this email and token to the DB entries */
 	UserAccUtils userUtils = new UserAccUtils();
 	try {
 	    correctToken = userUtils.compareHashedEmail(userEmail, token);
-	} catch (NoSuchAlgorithmException e) {
-	    // TODO Some error handling here!!
+	} catch (Exception e) {
 	    log.info("Failed to activate account for user " + UtilVars.PII_START + userEmail
 		    + UtilVars.PII_END + ".");
 	    log.info(e.getMessage());
+	    return "redirect:/error";// TODO Error page or something here.....
 	}
 
 	if (correctToken) {

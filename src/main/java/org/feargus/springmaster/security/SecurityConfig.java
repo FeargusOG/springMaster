@@ -1,8 +1,8 @@
 package org.feargus.springmaster.security;
 
 import org.feargus.springmaster.security.auth.CustomSaltSource;
+import org.feargus.springmaster.security.auth.CustomUserDetailsService;
 import org.feargus.springmaster.security.crypto.CustomPasswordEncoder;
-import org.feargus.springmaster.users.CustomUserDetailsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

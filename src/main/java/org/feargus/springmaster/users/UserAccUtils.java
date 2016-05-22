@@ -3,6 +3,7 @@ package org.feargus.springmaster.users;
 import java.security.NoSuchAlgorithmException;
 
 import org.feargus.springmaster.db.PostgresqlDataSource;
+import org.feargus.springmaster.db.SqlStmts;
 import org.feargus.springmaster.security.crypto.StringHasher;
 import org.feargus.springmaster.security.crypto.UniqueTokenGenerator;
 import org.slf4j.Logger;
@@ -11,6 +12,10 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 public class UserAccUtils {
+    public static final String ROLE_USER = "USER";
+    public static final String ROLE_ADMIN = "ADMIN";
+    public static final String ROLE_DBA = "DBA";
+
     private JdbcTemplate jdbcTemplate;
     private StringHasher stringHasher;
     private static final Logger log = LoggerFactory.getLogger(UserAccUtils.class);
@@ -49,6 +54,7 @@ public class UserAccUtils {
 
     public boolean compareHashedEmail(String userEmail, String inputHashedEmail)
 	    throws NoSuchAlgorithmException {
+
 	String dbSalt = selectSaltFromDB(userEmail);
 	String hashedEmail = stringHasher.hashThisString(combineSalt(dbSalt, userEmail));
 
@@ -60,13 +66,46 @@ public class UserAccUtils {
     }
 
     public void activateUser(String userEmail) {
-	jdbcTemplate.update("UPDATE members SET active='t' WHERE email=?", userEmail);
+	jdbcTemplate.update(SqlStmts.UPDATE_IS_ACTIVE_SQL, userEmail);
     }
 
-    public boolean selectActiveFromDB(String userEmail) throws DataAccessException {
-	String isActive = (String) this.jdbcTemplate.queryForObject(
-		"SELECT active from members WHERE email= ?", new Object[] { userEmail }, String.class);
-	log.info("\n\nIn UserUtils, here is the active: " + isActive);
+    public boolean selectIsNonExpiredFromDB(String userEmail) {
+	String isActive = (String) this.jdbcTemplate.queryForObject(SqlStmts.SELECT_IS_NONEXPIRED_SQL,
+		new Object[] { userEmail }, String.class);
+
+	if (isActive.equals("t")) {
+	    return true;
+	} else {
+	    return false;
+	}
+    }
+
+    public boolean selectIsCredsNonExpiredFromDB(String userEmail) {
+	String isActive = (String) this.jdbcTemplate.queryForObject(SqlStmts.SELECT_IS_CREDSNONEXPIRED_SQL,
+		new Object[] { userEmail }, String.class);
+
+	if (isActive.equals("t")) {
+	    return true;
+	} else {
+	    return false;
+	}
+    }
+
+    public boolean selectIsNonLockedFromDB(String userEmail) {
+	String isActive = (String) this.jdbcTemplate.queryForObject(SqlStmts.SELECT_IS_NONLOCKED_SQL,
+		new Object[] { userEmail }, String.class);
+
+	if (isActive.equals("t")) {
+	    return true;
+	} else {
+	    return false;
+	}
+    }
+
+    public boolean selectIsActiveFromDB(String userEmail) throws DataAccessException {
+	String isActive = (String) this.jdbcTemplate.queryForObject(SqlStmts.SELECT_IS_ACTIVE_SQL,
+		new Object[] { userEmail }, String.class);
+
 	if (isActive.equals("t")) {
 	    return true;
 	} else {
@@ -75,12 +114,12 @@ public class UserAccUtils {
     }
 
     public String selectPasswordFromDB(String userEmail) throws DataAccessException {
-	return (String) this.jdbcTemplate.queryForObject("SELECT pswrd from members WHERE email= ?",
+	return (String) this.jdbcTemplate.queryForObject(SqlStmts.SELECT_PSWRD_SQL,
 		new Object[] { userEmail }, String.class);
     }
 
     public String selectSaltFromDB(String userEmail) throws DataAccessException {
-	return (String) this.jdbcTemplate.queryForObject("SELECT salt from members WHERE email= ?",
+	return (String) this.jdbcTemplate.queryForObject(SqlStmts.SELECT_SALT_SQL,
 		new Object[] { userEmail }, String.class);
     }
 
