@@ -26,17 +26,12 @@ public class Mailer {
 	this.mailSession = Session.getInstance(setMailProps(), null);
     }
 
-    public void sendMail(String to, String subj, String body) {
-	try {
-	    // Build the Msg
-	    final MimeMessage msg = buildMimeMsg(to, subj, body);
+    public void sendMail(String to, String subj, String body) throws Exception {
+	// Build the Msg
+	final MimeMessage msg = buildMimeMsg(to, subj, body);
 
-	    // Send the Msg
-	    sendMimeMsg(msg);
-
-	} catch (Exception ex) {
-	    ex.printStackTrace();
-	}
+	// Send the Msg
+	sendMimeMsg(msg);
 
     }
 
@@ -52,7 +47,7 @@ public class Mailer {
 	return msg;
     }
 
-    private void sendMimeMsg(MimeMessage msg) throws MessagingException {
+    private void sendMimeMsg(MimeMessage msg) throws Exception {
 	SMTPTransport transport = (SMTPTransport) this.mailSession.getTransport("smtps");
 	transport.connect(this.SMTP_HOST, this.FROM, this.FROM_PWRD);
 	transport.sendMessage(msg, msg.getAllRecipients());

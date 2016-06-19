@@ -36,7 +36,7 @@ public class UserAccCreator {
 		user.isAccountNonLocked(), user.isCredentialsNonExpired());
     }
 
-    public void emailUserConfirmation(CustomUserDetails userObj) throws NoSuchAlgorithmException {
+    public void emailUserConfirmation(CustomUserDetails userObj) throws Exception {
 	Mailer mailSender = new Mailer();
 	final String hashedUserEmail = userUtils.hashUserEmail(userObj.getSalt(), userObj.getUserNameEmail());
 	final String userConfirmationURL = SystemVars.rootUrl + "/accountActivation?userEmail="
