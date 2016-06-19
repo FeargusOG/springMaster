@@ -6,6 +6,7 @@ import java.net.URISyntaxException;
 import javax.sql.DataSource;
 
 import org.apache.commons.dbcp.BasicDataSource;
+import org.feargus.springmaster.utils.SystemVars;
 
 public class PostgresqlDataSource {
     private BasicDataSource basicDataSource;
@@ -23,8 +24,7 @@ public class PostgresqlDataSource {
     public DataSource getDefaultDataSource() {
 	URI dbUri;
 	try {
-	    // dbUri = new URI(System.getenv(SystemVars.dbUrl));
-	    dbUri = new URI("postgres://postgres:Fallodon33ad!@localhost:5432/pgrestests");
+	    dbUri = new URI(System.getenv(SystemVars.dbUrl));
 	    dbUsername = dbUri.getUserInfo().split(":")[0];
 	    dbPassword = dbUri.getUserInfo().split(":")[1];
 	    dbUrl = "jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath();
