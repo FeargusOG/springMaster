@@ -31,4 +31,5 @@ Captain's Log:
 		> Got the user acc creation form and backend working with the new CustomUserDetails class
 
 	> 19/06/16 (Shrewsbury)
-		> 
+		> Got the User roles loading correctly from the DB.
+		> Got spring security to correctly check for user role.
