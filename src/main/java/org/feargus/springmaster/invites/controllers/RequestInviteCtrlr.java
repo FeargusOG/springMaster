@@ -35,11 +35,15 @@ public class RequestInviteCtrlr {
 	log.info("Invite requested by: " + UtilVars.PII_START + invite.getUserEmail() + UtilVars.PII_END);
 
 	Mailer mailSender = new Mailer();
-	mailSender.sendMail(
-		"feargusorg@gmail.com",
-		"Invite Request for: " + invite.getProjectName(),
-		"I would like to join please! :)\n\nUser: " + invite.getUserEmail() + "\nProject: "
-			+ invite.getProjectName() + "\nInvite Generator URL: " + generatedEmailLink);
+	try {
+	    mailSender.sendMail("feargusorg@gmail.com", "Invite Request for: " + invite.getProjectName(),
+		    "I would like to join please! :)\n\nUser: " + invite.getUserEmail() + "\nProject: "
+			    + invite.getProjectName() + "\nInvite Generator URL: " + generatedEmailLink);
+	} catch (Exception e) {
+	    log.info("Failed to email myself an invite request.");
+	    log.info(e.getMessage());
+	    return "redirect:/error";// TODO Error page or something here.....
+	}
 
 	log.info("Finished sending a mail requesting invite for: " + UtilVars.PII_START
 		+ invite.getUserEmail() + UtilVars.PII_END);

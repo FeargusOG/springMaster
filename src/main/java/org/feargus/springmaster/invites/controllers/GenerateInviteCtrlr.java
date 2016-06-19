@@ -56,9 +56,16 @@ public class GenerateInviteCtrlr {
 	final String inviteConfirmationUrl = SystemVars.rootUrl + "/confirmInvite?userEmail=" + userEmail
 		+ "&token=" + token;
 	Mailer mailSender = new Mailer();
-	mailSender.sendMail(userEmail, "Invite request accepted for feargus.org!",
-		"Hi!\n\nThanks for requesting an invite at feargus.org! Please follow this link to confirm your invite: "
-			+ inviteConfirmationUrl);
+	try {
+	    mailSender.sendMail(userEmail, "Invite request accepted for feargus.org!",
+		    "Hi!\n\nThanks for requesting an invite at feargus.org! Please follow this link to confirm your invite: "
+			    + inviteConfirmationUrl);
+	} catch (Exception e) {
+	    log.info("Failed to email user their invite: " + UtilVars.PII_START + userEmail
+		    + UtilVars.PII_END);
+	    log.info(e.getMessage());
+	    return;
+	}
 
 	log.info("Finished sending a mail extending an invite for: " + UtilVars.PII_START + userEmail
 		+ UtilVars.PII_END);
