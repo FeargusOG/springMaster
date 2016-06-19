@@ -43,7 +43,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     protected void configure(HttpSecurity http) throws Exception {
-	log.info("\n\nIN THE CONFIGURE FUNC....\n\n");
 	http.authorizeRequests()
 		.antMatchers("/", "/index", "/accountCreation", "/accountActivation", "/error").permitAll()// Exclude some urls from requiring authentication
 		.antMatchers("/home").hasRole("USER")//Only users may access the home page.
