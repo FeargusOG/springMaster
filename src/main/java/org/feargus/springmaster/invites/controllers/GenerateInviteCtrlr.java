@@ -53,8 +53,8 @@ public class GenerateInviteCtrlr {
     }
 
     private void emailUserInvite(String userEmail, String token) {
-	final String inviteConfirmationUrl = SystemVars.rootUrl + "/confirmInvite?userEmail=" + userEmail
-		+ "&token=" + token;
+	final String inviteConfirmationUrl = System.getenv(SystemVars.ROOT_URL) + "/confirmInvite?userEmail="
+		+ userEmail + "&token=" + token;
 	Mailer mailSender = new Mailer();
 	try {
 	    mailSender.sendMail(userEmail, "Invite request accepted for feargus.org!",

@@ -30,7 +30,8 @@ public class RequestInviteCtrlr {
     public String requestInvite(@RequestParam(value = "projectName", required = true) String projectName,
 	    @ModelAttribute InviteRequestObj invite, Model model) {
 
-	String generatedEmailLink = SystemVars.rootUrl + "/generateInvite?userEmail=" + invite.getUserEmail();
+	String generatedEmailLink = System.getenv(SystemVars.ROOT_URL) + "/generateInvite?userEmail="
+		+ invite.getUserEmail();
 
 	log.info("Invite requested by: " + UtilVars.PII_START + invite.getUserEmail() + UtilVars.PII_END);
 
