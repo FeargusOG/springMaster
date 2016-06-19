@@ -1,6 +1,7 @@
 Task List:
 	> I changed the tables locally, but not in Heroku!! Also, didn't add back in a user role or invite table.
 	> I need to get the CustomUserDetailsService.loadUserByUsername to load the user fully. Have utils load the user, and this calls that.
+		> Still need to load the GrantedAuth
 	> I need transactionality for operations.... if I don't add a user role for a user, I want to rollback the account creation...
 		> http://docs.spring.io/autorepo/docs/spring/4.2.x/spring-framework-reference/html/transaction.html
 	> Remove junk from github for this project
@@ -26,5 +27,8 @@ Captain's Log:
 		> Added a lot of code for performing custom jdbc authentication. Overall, it went well but supplying your own salt to the DaoAuthenticationProvider PasswordEncoder is now deprecated. However, I decided to use the deprecated version so that I can continue to use my custom salt.
 		> Added lowerCase conversion when taking in user emails (so lowercase is stored in db).
 
-	21/05/16 (Starbucks, Waterloo Road)
+	> 21/05/16 (Starbucks, Waterloo Road)
 		> Got the user acc creation form and backend working with the new CustomUserDetails class
+
+	> 19/06/16 (Shrewsbury)
+		> 

@@ -1,9 +1,13 @@
 package org.feargus.springmaster.users;
 
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import org.feargus.springmaster.db.PostgresqlDataSource;
 import org.feargus.springmaster.db.SqlStmts;
+import org.feargus.springmaster.security.auth.CustomGrantedAuthRowMapper;
+import org.feargus.springmaster.security.auth.CustomGrantedAuthority;
 import org.feargus.springmaster.security.crypto.StringHasher;
 import org.feargus.springmaster.security.crypto.UniqueTokenGenerator;
 import org.slf4j.Logger;
@@ -18,12 +22,34 @@ public class UserAccUtils {
 
     private JdbcTemplate jdbcTemplate;
     private StringHasher stringHasher;
+
+    @SuppressWarnings("unused")
     private static final Logger log = LoggerFactory.getLogger(UserAccUtils.class);
 
     public UserAccUtils() {
 	PostgresqlDataSource psqlDataSource = new PostgresqlDataSource();
 	this.jdbcTemplate = new JdbcTemplate(psqlDataSource.getDefaultDataSource());
 	this.stringHasher = new StringHasher();
+    }
+
+    public CustomUserDetails loadUserFromDb(String userEmail) {
+	CustomUserDetails userDetails = new CustomUserDetails();
+
+	/* Set the user email directly */
+	userDetails.setUserNameEmail(userEmail);
+
+	/* Now set the rest from the db */
+	userDetails.setUserId(selectUserIdFromDB(userEmail));
+	userDetails.setUserHandle(selectUserHandleFromDB(userEmail));
+	userDetails.setSalt(selectSaltFromDB(userEmail));
+	userDetails.setPassword(selectPasswordFromDB(userEmail));
+	userDetails.setUserActive(selectIsActiveFromDB(userEmail));
+	userDetails.setUserNonExpired(selectIsNonExpiredFromDB(userEmail));
+	userDetails.setUserNonLocked(selectIsNonLockedFromDB(userEmail));
+	userDetails.setUserCredsNonExpired(selectIsCredsNonExpiredFromDB(userEmail));
+	userDetails.setUserAuthorities(selectUserAuthoritiesFromDB(userEmail));
+
+	return userDetails;
     }
 
     public String hashUserPassword(String salt, String pswrd) throws NoSuchAlgorithmException {
@@ -67,6 +93,16 @@ public class UserAccUtils {
 
     public void activateUser(String userEmail) {
 	jdbcTemplate.update(SqlStmts.UPDATE_IS_ACTIVE_SQL, userEmail);
+    }
+
+    public Collection<CustomGrantedAuthority> selectUserAuthoritiesFromDB(String userEmail) {
+
+	Collection<CustomGrantedAuthority> userAuthorities = new ArrayList<CustomGrantedAuthority>();
+
+	userAuthorities = this.jdbcTemplate.query(SqlStmts.SELECT_USERS_ROLES, new Object[] { userEmail },
+		new CustomGrantedAuthRowMapper());
+
+	return userAuthorities;
     }
 
     public boolean selectIsNonExpiredFromDB(String userEmail) {
@@ -121,6 +157,17 @@ public class UserAccUtils {
     public String selectSaltFromDB(String userEmail) throws DataAccessException {
 	return (String) this.jdbcTemplate.queryForObject(SqlStmts.SELECT_SALT_SQL,
 		new Object[] { userEmail }, String.class);
+    }
+
+    public String selectUserHandleFromDB(String userEmail) throws DataAccessException {
+	return (String) this.jdbcTemplate.queryForObject(SqlStmts.SELECT_USERHANDLE_SQL,
+		new Object[] { userEmail }, String.class);
+    }
+
+    public int selectUserIdFromDB(String userEmail) throws DataAccessException {
+	Integer userIdInteger = (Integer) this.jdbcTemplate.queryForObject(SqlStmts.SELECT_USERID_SQL,
+		new Object[] { userEmail }, Integer.class);
+	return userIdInteger.intValue();
     }
 
     private String combineSalt(String salt, String inputString) {

@@ -43,8 +43,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     protected void configure(HttpSecurity http) throws Exception {
+	log.info("\n\nIN THE CONFIGURE FUNC....\n\n");
 	http.authorizeRequests()
 		.antMatchers("/", "/index", "/accountCreation", "/accountActivation").permitAll()// Exclude some urls from requiring authentication
+		.antMatchers("/home").hasRole("USER")//Only users may access the home page.
 		.antMatchers("/admin/**").hasRole("ADMIN")// Only users with the admin role can access urls with ../admin/..
 		.antMatchers("/db/**").access("hasRole('ADMIN') and hasRole('DBA')")// Only users with both the admin and dba roles can access urls with ../db/..
 		.anyRequest().authenticated()

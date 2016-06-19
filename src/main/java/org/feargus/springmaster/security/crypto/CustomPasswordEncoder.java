@@ -11,6 +11,7 @@ import org.springframework.security.authentication.encoding.PasswordEncoder;
 // The un-deprecated version does not allow custom salt
 public class CustomPasswordEncoder implements PasswordEncoder {
     private StringHasher stringHasher;
+    @SuppressWarnings("unused")
     private static final Logger log = LoggerFactory.getLogger(CustomPasswordEncoder.class);
 
     public CustomPasswordEncoder() {
@@ -31,7 +32,7 @@ public class CustomPasswordEncoder implements PasswordEncoder {
     @Override
     public boolean isPasswordValid(String encPass, String rawPass, Object salt) {
 	String encodedPswr = encodePassword(rawPass, salt);
-	log.info("\n\n\tWe are comparing the passwords....\n\n");
+	// log.info("\n\n\tWe are comparing the passwords....\n\n");
 	if (encodedPswr.equals(encPass)) {
 	    return true;
 	} else {

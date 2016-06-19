@@ -7,6 +7,7 @@ import org.springframework.security.authentication.dao.SaltSource;
 import org.springframework.security.core.userdetails.UserDetails;
 
 public class CustomSaltSource implements SaltSource {
+    @SuppressWarnings("unused")
     private static final Logger log = LoggerFactory.getLogger(CustomSaltSource.class);
     private UserAccUtils userUtils;
 
@@ -19,7 +20,7 @@ public class CustomSaltSource implements SaltSource {
 
 	/* getUsername actually gets the email for the user */
 	String userSalt = this.userUtils.selectSaltFromDB(userDetails.getUsername());
-	log.info("\n\nHere is the user salt: " + userSalt + "\n\n");
+	// log.info("\n\nHere is the user salt: " + userSalt + "\n\n");
 	return userSalt;
     }
 
