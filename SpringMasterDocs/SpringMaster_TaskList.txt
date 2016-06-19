@@ -1,7 +1,7 @@
 Task List:
 	> I didn't add back in a user role or invite table.
 	> Gmail not working from Heroku.... Had to navigate to this link logged in as feargusorg.gmail - https://accounts.google.com/b/0/DisplayUnlockCaptcha
-		> maybe move away from gmail, and use one of herokus free add ons for mail...
+		> maybe move away from gmail, and use one of herokus free add ons for mail... Seems like I need to rehit that link each time I redeploy!
 	> I need transactionality for operations.... if I don't add a user role for a user, I want to rollback the account creation...
 		> http://docs.spring.io/autorepo/docs/spring/4.2.x/spring-framework-reference/html/transaction.html
 	> Remove junk from github for this project
