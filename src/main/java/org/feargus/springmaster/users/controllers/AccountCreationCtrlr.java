@@ -57,8 +57,7 @@ public class AccountCreationCtrlr {
 	    log.info("Succesfully added a User role for account: " + userObj.toString());
 	} catch (Exception e) {
 	    log.info("Failed to add a User role for account: " + userObj.toString());
-	    e.printStackTrace();
-	    // log.info(e.getMessage());
+	    log.info(e.toString());
 	    return "redirect:/error";// TODO Error page or something here.....
 	}
 
