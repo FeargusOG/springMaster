@@ -39,10 +39,11 @@ public class UserAccCreator {
     public void emailUserConfirmation(CustomUserDetails userObj) throws Exception {
 	Mailer mailSender = new Mailer();
 	final String hashedUserEmail = userUtils.hashUserEmail(userObj.getSalt(), userObj.getUserNameEmail());
-	final String userConfirmationURL = System.getenv(SystemVars.getInstance().getROOT_URL())
+	final String userConfirmationURL = SystemVars.getInstance().getROOT_URL()
 		+ "/accountActivation?userEmail=" + userObj.getUserNameEmail() + "&token=" + hashedUserEmail;
 
-	mailSender.sendMail(userObj.getUserNameEmail(), "User Account Confirmation for feargus.org!",
+	mailSender.sendMail(userObj.getUserNameEmail(), SystemVars.getInstance().getADMIN_EMAIL(),
+		"User Account Confirmation for feargus.org!",
 		"Hi!\n\nThanks for requesting an account for feargus.org! Please follow this link to confirm your account: "
 			+ userConfirmationURL);
     }

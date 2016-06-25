@@ -8,6 +8,8 @@ public class SystemVars {
     private String ADMIN_EMAIL = null;
     private String ADMIN_EMAIL_PSWRD = null;
     private String SYSTEM_BUILD = null;
+    private String SENDGRID_USER = null;
+    private String SENDGRID_PSWRD = null;
 
     protected SystemVars() {
 	this.DB_URL = System.getenv("DATABASE_URL");
@@ -15,6 +17,8 @@ public class SystemVars {
 	this.ADMIN_EMAIL = System.getenv("ADMIN_EMAIL");
 	this.ADMIN_EMAIL_PSWRD = System.getenv("ADMIN_EMAIL_PSWRD");
 	this.SYSTEM_BUILD = System.getenv("SPRING_BUILD_LEVEL");
+	this.SENDGRID_USER = System.getenv("SENDGRID_USERNAME");
+	this.SENDGRID_PSWRD = System.getenv("SENDGRID_PASSWORD");
     }
 
     public static SystemVars getInstance() {
@@ -44,13 +48,23 @@ public class SystemVars {
 	return SYSTEM_BUILD;
     }
 
-//@formatter:off
+    public String getSENDGRID_USER() {
+	return SENDGRID_USER;
+    }
+
+    public String getSENDGRID_PSWRD() {
+	return SENDGRID_PSWRD;
+    }
+
+    //@formatter:off
     public String toString() {
 	return  "DB_URL:\t\t\t" + UtilVars.PII_START + DB_URL + UtilVars.PII_END +
 		"\nROOT_URL:\t\t" + ROOT_URL + 
 		"\nADMIN_EMAIL:\t\t" + UtilVars.PII_START + ADMIN_EMAIL + UtilVars.PII_END + 
 		"\nADMIN_EMAIL_PSWRD:\t" + UtilVars.PII_START + ADMIN_EMAIL_PSWRD + UtilVars.PII_END + 
-		"\nSYSTEM_BUILD:\t\t" + SYSTEM_BUILD;
+		"\nSYSTEM_BUILD:\t\t" + SYSTEM_BUILD+
+		"\nSENDGRID_USER:\t\t" + UtilVars.PII_START + SENDGRID_USER + UtilVars.PII_END +
+		"\nSENDGRID_PSWRD:\t\t" + UtilVars.PII_START + SENDGRID_PSWRD + UtilVars.PII_END;
     }
-// @formatter:on
+    // @formatter:on
 }

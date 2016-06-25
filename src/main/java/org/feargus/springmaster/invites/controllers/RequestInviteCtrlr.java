@@ -30,14 +30,15 @@ public class RequestInviteCtrlr {
     public String requestInvite(@RequestParam(value = "projectName", required = true) String projectName,
 	    @ModelAttribute InviteRequestObj invite, Model model) {
 
-	String generatedEmailLink = System.getenv(SystemVars.getInstance().getROOT_URL())
-		+ "/generateInvite?userEmail=" + invite.getUserEmail();
+	String generatedEmailLink = SystemVars.getInstance().getROOT_URL() + "/generateInvite?userEmail="
+		+ invite.getUserEmail();
 
 	log.info("Invite requested by: " + UtilVars.PII_START + invite.getUserEmail() + UtilVars.PII_END);
 
-	Mailer mailSender = new Mailer();
 	try {
-	    mailSender.sendMail("feargusorg@gmail.com", "Invite Request for: " + invite.getProjectName(),
+	    Mailer mailSender = new Mailer();
+	    mailSender.sendMail(SystemVars.getInstance().getADMIN_EMAIL(), SystemVars.getInstance()
+		    .getADMIN_EMAIL(), "Invite Request for: " + invite.getProjectName(),
 		    "I would like to join please! :)\n\nUser: " + invite.getUserEmail() + "\nProject: "
 			    + invite.getProjectName() + "\nInvite Generator URL: " + generatedEmailLink);
 	} catch (Exception e) {
