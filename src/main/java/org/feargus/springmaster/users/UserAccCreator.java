@@ -42,9 +42,9 @@ public class UserAccCreator {
 	final String userConfirmationURL = SystemVars.getInstance().getROOT_URL()
 		+ "/accountActivation?userEmail=" + userObj.getUserNameEmail() + "&token=" + hashedUserEmail;
 	final String emailBody = "<html><body>Hi!<br /><br /><p>Thanks for requesting an account for feargus.org!</p><p>Please follow this link to confirm your account:"
-		+ " <a href="
+		+ " <a href=\""
 		+ userConfirmationURL
-		+ ">Confirm Account</a>"
+		+ "\">Confirm Account</a>"
 		+ "</p>Thanks,<br />Feargus</body></html>";
 	final String emailSubject = "User Account Confirmation for feargus.org!";
 
