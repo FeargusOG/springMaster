@@ -1,5 +1,6 @@
 package org.feargus.springmaster;
 
+import org.feargus.springmaster.utils.SystemVars;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -24,6 +25,7 @@ public class Application implements CommandLineRunner {
 
     @Override
     public void run(String... strings) throws Exception {
-	log.info("STARTING RUN....");
+	log.info("Loading System Vars...");
+	log.info("\n" + SystemVars.getInstance().toString());
     }
 }

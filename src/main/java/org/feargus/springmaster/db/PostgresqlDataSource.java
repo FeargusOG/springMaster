@@ -24,7 +24,7 @@ public class PostgresqlDataSource {
     public DataSource getDefaultDataSource() {
 	URI dbUri;
 	try {
-	    dbUri = new URI(System.getenv(SystemVars.DB_URL));
+	    dbUri = new URI(SystemVars.getInstance().getDB_URL());
 	    dbUsername = dbUri.getUserInfo().split(":")[0];
 	    dbPassword = dbUri.getUserInfo().split(":")[1];
 	    dbUrl = "jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath();

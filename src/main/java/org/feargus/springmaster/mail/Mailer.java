@@ -16,8 +16,8 @@ import com.sun.mail.smtp.SMTPTransport;
 
 public class Mailer {
     private Session mailSession;
-    private final String FROM = System.getenv(SystemVars.ADMIN_EMAIL);
-    private final String FROM_PWRD = System.getenv(SystemVars.ADMIN_EMAIL_PSWRD);
+    private final String FROM = System.getenv(SystemVars.getInstance().getADMIN_EMAIL());
+    private final String FROM_PWRD = System.getenv(SystemVars.getInstance().getADMIN_EMAIL_PSWRD());
     private final String SMTP_HOST = "smtp.gmail.com";
 
     public Mailer() {
