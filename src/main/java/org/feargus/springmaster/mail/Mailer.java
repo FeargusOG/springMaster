@@ -7,7 +7,8 @@ public class Mailer implements MailProvider {
     private String systemBuild = null;
 
     public Mailer() throws Exception {
-	/* Find out whether we want the prod or test mailer */
+
+	/* Find out whether we want the production or test mailer */
 	systemBuild = SystemVars.getInstance().getSYSTEM_BUILD();
 
 	if (systemBuild.equals("production")) {

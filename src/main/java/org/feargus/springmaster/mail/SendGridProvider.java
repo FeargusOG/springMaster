@@ -19,8 +19,6 @@ class SendGridProvider implements MailProvider {
 
 	SendGrid.Response response = sendgrid.send(email);
 	log.info(response.getMessage());
-	log.info(response.toString());
-
     }
 
     private SendGrid.Email buildEmail(String to, String from, String subject, String body) {

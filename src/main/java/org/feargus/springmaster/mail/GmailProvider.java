@@ -11,13 +11,12 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import org.feargus.springmaster.utils.SystemVars;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.sun.mail.smtp.SMTPTransport;
 
 class GmailProvider implements MailProvider {
-    private static final Logger log = LoggerFactory.getLogger(GmailProvider.class);
+    // private static final Logger log =
+    // LoggerFactory.getLogger(GmailProvider.class);
     private Session mailSession;
     private final String FROM_PWRD = SystemVars.getInstance().getADMIN_EMAIL_PSWRD();
     private final String SMTP_HOST = "smtp.gmail.com";
@@ -30,21 +29,22 @@ class GmailProvider implements MailProvider {
 
     @Override
     public void sendMail(String to, String from, String subject, String body) throws Exception {
-	log.info("To: " + to + ", From: " + from);
-	// Build the Msg
+
+	// Build the message
 	final MimeMessage msg = buildMimeMsg(to, from, subject, body);
 
-	// Send the Msg
+	// Send the message
 	sendMimeMsg(from, msg);
 
     }
 
     private MimeMessage buildMimeMsg(String to, String from, String subj, String body)
 	    throws MessagingException {
+
 	final MimeMessage msg = new MimeMessage(this.mailSession);
 
-	msg.setFrom(new InternetAddress(from));
 	msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to, false));
+	msg.setFrom(new InternetAddress(from));
 	msg.setSubject(subj);
 	msg.setText(body, "utf-8");
 	msg.setSentDate(new Date());
@@ -62,7 +62,6 @@ class GmailProvider implements MailProvider {
     private Properties setMailProps() {
 	final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
 
-	// Get a Properties object
 	Properties props = System.getProperties();
 	props.setProperty("mail.smtps.host", "smtp.gmail.com");
 	props.setProperty("mail.smtp.port", "465");
