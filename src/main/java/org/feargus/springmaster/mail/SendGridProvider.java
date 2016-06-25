@@ -26,7 +26,8 @@ class SendGridProvider implements MailProvider {
 	email.addTo(to);
 	email.setFrom(from);
 	email.setSubject(subject);
-	email.setText(body);
+	// email.setText(body);
+	email.setHtml(body);
 	return email;
     }
 }
