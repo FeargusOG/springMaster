@@ -43,7 +43,7 @@ public class UserAccCreator {
 	// SystemVars.getInstance().getROOT_URL()
 	// + "/accountActivation?userEmail=" + userObj.getUserNameEmail() +
 	// "&token=" + hashedUserEmail;
-	final String userConfirmationURL = "www.google.ie";
+	final String userConfirmationURL = "http://www.w3schools.com";
 	final String emailBody = "<html><body>Hi!<br /><br /><p>Thanks for requesting an account for feargus.org!</p><p>Please follow this link to confirm your account:"
 		+ " <a href=\""
 		+ userConfirmationURL
