@@ -1,15 +1,41 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
-    <head>
-        <title>Spring Security Example</title>
-    </head>
-    <body>
-        <h1>Welcome!</h1>
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
-        <p>Click <a th:href="@{/home}">here</a> to go to the homepage.</p>
-		
-		<p>New users can create an account <a th:href="@{/accountCreation}">here</a>.</p>
-        <!-- Check this out for form validation: https://spring.io/guides/gs/validating-form-input/ -->
-        
-    </body>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+<title>feargus.org - Index</title>
+
+</head>
+<body>
+	<div class="container-fluid">
+
+		<div class="row">
+			<div class="col-md-12">
+				<h1>Welcome to feargus.org!</h1>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-md-12">
+				<p>
+					Click <a th:href="@{/home}">here</a> to go to the homepage.
+				</p>
+				<p>
+					New users can create an account <a th:href="@{/accountCreation}">here</a>.
+				</p>
+			</div>
+		</div>
+
+	</div>
+</body>
 </html>

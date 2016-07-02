@@ -1,91 +1,116 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org"
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-<title>Spring Security Example</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+<title>feargus.org - Account Creation</title>
+
 </head>
 <body>
-	<h1>Create your account here!</h1>
+	<div class="container-fluid">
+		<h1>Create your account here!</h1>
 
-	<form action="#" th:action="@{/accountCreation}" th:object="${customUserDetails}" onsubmit="return validateUserForm()" method="post">
-		<div>
-			<label for="usernameId">Username: </label> 
-			<input type="text" id="usernameId" name="username" th:field="*{userHandle}" />
-			<div th:if="${#fields.hasErrors('userHandle')}" th:errors="*{userHandle}">Name Error </div>
-		</div>
-		<div>
-			<label for="emailId1">Email: </label>
-			<input type="text" id="emailId1" name="email1" th:field="*{userNameEmail}" />
-			<div th:if="${#fields.hasErrors('userNameEmail')}" th:errors="*{userNameEmail}">Email Error</div>
-		</div>
-		<div>
-			<label for="emailId2">Confirm Email: </label>
-			<input type="text" id="emailId2" name="email2" />
-		</div>
-		<div>
-			<label for="pswrdId1">Password: </label>
-			<input type="password" id="pswrdId1" name="pswrd1" th:field="*{nonSaltedUserPassword}" />
-			<div th:if="${#fields.hasErrors('nonSaltedUserPassword')}" th:errors="*{nonSaltedUserPassword}">Password Error</div>
-		</div>
-		<div>
-			<label for="pswrdId2">Confirm Password: </label>
-			<input type="password" id="pswrdId2" name="pswrd2" />
-		</div>
-		<div>
-			<button type="submit">Submit</button>
-		</div>
-		<div>
-			<input type="hidden" th:name="${_csrf.parameterName}"
-				th:value="${_csrf.token}" />
-		</div>
-		<script type="text/javascript">
-            	function validateUserForm(){
-            		var statusEmail = validateEmail();
-            		var statusPswrd = validatePswrd();
-            		if(!statusEmail || !statusPswrd){
-            			return false;
-            		} else {
-            			return true;
-            		}
-            	}
-	            function validateEmail() {
-	                var email1 = document.getElementById("emailId1").value;
-	                var email2 = document.getElementById("emailId2").value;
-	                var ok = true;
-	             	
-	                if(!email1 || !email2){
-	                	alert("The email field is required!\n");
-	                	ok = false;
-	                } else {
-	                	if (email1 != email2) {
-		                    alert("The emails provided do not match!\n");
-		                    document.getElementById("emailId1").style.borderColor = "#E34234";
-		                    document.getElementById("emailId2").style.borderColor = "#E34234";
-		                    ok = false;
-		                }
-	                }
-	                return ok;
-	            }
-	            function validatePswrd() {
-	                var pwrd1 = document.getElementById("pswrdId1").value;
-	                var pwrd2 = document.getElementById("pswrdId2").value;
-	                var ok = true;
-	                
-	                if(!pwrd1 || !pwrd2){
-	                	alert("The password field is required!\n");
-	                	ok = false;
-	                } else {
-	                	if (pwrd1 != pwrd2) {
-		                    alert("The password provided do not match!\n");
-		                    document.getElementById("pswrdId1").style.borderColor = "#E34234";
-		                    document.getElementById("pswrdId2").style.borderColor = "#E34234";
-		                    ok = false;
-		                }
-	                }
-	                return ok;
-	            }
-            </script>
-	</form>
+		<form role="form" action="#" th:action="@{/accountCreation}" th:object="${customUserDetails}"
+			onsubmit="return validateUserForm()" method="post">
+			<div class="form-group row">
+				<label for="usernameId" class="col-sm-2 form-control-label">Username: </label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="usernameId" name="username" th:field="*{userHandle}" />
+					<div th:if="${#fields.hasErrors('userHandle')}" th:errors="*{userHandle}">Name Error</div>
+				</div>
+			</div>
+			<div class="form-group row">
+				<label for="emailId1" class="col-sm-2 form-control-label">Email: </label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="emailId1" name="email1" th:field="*{userNameEmail}" />
+					<div th:if="${#fields.hasErrors('userNameEmail')}" th:errors="*{userNameEmail}">Email Error</div>
+				</div>
+			</div>
+			<div class="form-group row">
+				<label for="emailId2" class="col-sm-2 form-control-label">Confirm Email: </label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="emailId2" name="email2" />
+				</div>
+			</div>
+			<div class="form-group row">
+				<label for="pswrdId1" class="col-sm-2 form-control-label">Password: </label>
+				<div class="col-sm-10">
+					<input type="password" class="form-control" id="pswrdId1" name="pswrd1" th:field="*{nonSaltedUserPassword}" />
+					<div th:if="${#fields.hasErrors('nonSaltedUserPassword')}" th:errors="*{nonSaltedUserPassword}">Password Error</div>
+				</div>
+			</div>
+			<div class="form-group row">
+				<label for="pswrdId2" class="col-sm-2 form-control-label">Confirm Password: </label>
+				<div class="col-sm-10"> 
+				<input type="password" class="form-control" id="pswrdId2" name="pswrd2" />
+				</div>
+			</div>
+			<div class="form-group row">
+				<div class="col-sm-offset-2 col-sm-10">
+					<button type="submit" class="btn btn-secondary">Sign In</button>
+				</div>
+			</div>
+			<div>
+				<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+			</div>
+			<script type="text/javascript">
+				function validateUserForm() {
+					var statusEmail = validateEmail();
+					var statusPswrd = validatePswrd();
+					if (!statusEmail || !statusPswrd) {
+						return false;
+					} else {
+						return true;
+					}
+				}
+				function validateEmail() {
+					var email1 = document.getElementById("emailId1").value;
+					var email2 = document.getElementById("emailId2").value;
+					var ok = true;
+
+					if (!email1 || !email2) {
+						alert("The email field is required!\n");
+						ok = false;
+					} else {
+						if (email1 != email2) {
+							alert("The emails provided do not match!\n");
+							document.getElementById("emailId1").style.borderColor = "#E34234";
+							document.getElementById("emailId2").style.borderColor = "#E34234";
+							ok = false;
+						}
+					}
+					return ok;
+				}
+				function validatePswrd() {
+					var pwrd1 = document.getElementById("pswrdId1").value;
+					var pwrd2 = document.getElementById("pswrdId2").value;
+					var ok = true;
+
+					if (!pwrd1 || !pwrd2) {
+						alert("The password field is required!\n");
+						ok = false;
+					} else {
+						if (pwrd1 != pwrd2) {
+							alert("The password provided do not match!\n");
+							document.getElementById("pswrdId1").style.borderColor = "#E34234";
+							document.getElementById("pswrdId2").style.borderColor = "#E34234";
+							ok = false;
+						}
+					}
+					return ok;
+				}
+			</script>
+		</form>
+	</div>
 </body>
 </html>
