@@ -21,11 +21,9 @@ public class AccountCreationCtrlr {
     @RequestMapping(value = "/accountCreation", method = RequestMethod.GET)
     public String getAccountCreation(CustomUserDetails userDetails) {
 	/*
-	 * The form will look for the class name CustomUserDetails with the
-	 * first letter lowercase - customUserDetails. That's how it
-	 * automatically finds the binding. Otherwise, I think you can specify
-	 * modelAttribute if you want a different name to be used for the
-	 * variable in the form.
+	 * The form will look for the class name CustomUserDetails with the first letter lowercase - customUserDetails.
+	 * That's how it automatically finds the binding. Otherwise, I think you can specify modelAttribute if you want
+	 * a different name to be used for the variable in the form.
 	 */
 
 	return "accountCreation";
@@ -69,7 +67,6 @@ public class AccountCreationCtrlr {
 	    log.info("Failed to email user for account confirm: " + userObj.toString());
 	    log.info(e.getMessage());
 	    e.printStackTrace();
-	    log.info("BLAH");
 	    return "redirect:/error";// TODO Error page or something here.....
 	}
 

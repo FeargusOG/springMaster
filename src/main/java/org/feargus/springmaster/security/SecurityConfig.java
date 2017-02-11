@@ -13,7 +13,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
-//@formatter:off
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -22,26 +21,27 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private DaoAuthenticationProvider daoAuthProvider;
     private CustomSaltSource saltSource;
     private CustomUserDetailsService userDetailsService;
-    
-    public SecurityConfig(){
+
+    public SecurityConfig() {
 	this.pswrdEncoder = new CustomPasswordEncoder();
 	this.daoAuthProvider = new DaoAuthenticationProvider();
 	this.saltSource = new CustomSaltSource();
 	this.userDetailsService = new CustomUserDetailsService();
     }
-    
+
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 	log.info("\n\n Setting up the auth manager....\n\n");
-	
+
 	/* Set up the auth provider */
 	daoAuthProvider.setSaltSource(this.saltSource);
 	daoAuthProvider.setUserDetailsService(this.userDetailsService);
 	daoAuthProvider.setPasswordEncoder(this.pswrdEncoder);
-	
+
 	auth.authenticationProvider(daoAuthProvider);
     }
 
+    //@formatter:off
     protected void configure(HttpSecurity http) throws Exception {
 	http.authorizeRequests()
 		.antMatchers("/", "/index", "/accountCreation", "/accountActivation", "/error").permitAll()// Exclude some urls from requiring authentication

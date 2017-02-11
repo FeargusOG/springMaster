@@ -38,8 +38,7 @@ class GmailProvider implements MailProvider {
 
     }
 
-    private MimeMessage buildMimeMsg(String to, String from, String subj, String body)
-	    throws MessagingException {
+    private MimeMessage buildMimeMsg(String to, String from, String subj, String body) throws MessagingException {
 
 	final MimeMessage msg = new MimeMessage(this.mailSession);
 

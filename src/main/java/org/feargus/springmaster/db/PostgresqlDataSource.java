@@ -35,6 +35,7 @@ public class PostgresqlDataSource {
 
 	} catch (URISyntaxException e) {
 	    e.printStackTrace();
+	    // TODO: If exception, we're returning the DS anyway. Fix this.
 	}
 
 	return basicDataSource;

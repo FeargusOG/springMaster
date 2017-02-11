@@ -19,8 +19,7 @@ public class RequestInviteCtrlr {
     private static final Logger log = LoggerFactory.getLogger(RequestInviteCtrlr.class);
 
     @RequestMapping(value = "/requestInvite", method = RequestMethod.GET)
-    public String greetingForm(@RequestParam(value = "projectName", required = true) String requestedProj,
-	    Model model) {
+    public String greetingForm(@RequestParam(value = "projectName", required = true) String requestedProj, Model model) {
 	model.addAttribute("requestInvite", new InviteRequestObj());
 	model.addAttribute("requestedProj", requestedProj);
 	return "requestInvite";
@@ -30,26 +29,36 @@ public class RequestInviteCtrlr {
     public String requestInvite(@RequestParam(value = "projectName", required = true) String projectName,
 	    @ModelAttribute InviteRequestObj invite, Model model) {
 
-	String generatedEmailLink = SystemVars.getInstance().getROOT_URL() + "/generateInvite?userEmail="
-		+ invite.getUserEmail();
-
 	log.info("Invite requested by: " + UtilVars.PII_START + invite.getUserEmail() + UtilVars.PII_END);
 
 	try {
 	    Mailer mailSender = new Mailer();
-	    mailSender.sendMail(SystemVars.getInstance().getADMIN_EMAIL(), SystemVars.getInstance()
-		    .getADMIN_EMAIL(), "Invite Request for: " + invite.getProjectName(),
-		    "I would like to join please! :)\n\nUser: " + invite.getUserEmail() + "\nProject: "
-			    + invite.getProjectName() + "\nInvite Generator URL: " + generatedEmailLink);
+	    mailSender.sendMail(SystemVars.getInstance().getADMIN_EMAIL(), SystemVars.getInstance().getADMIN_EMAIL(),
+		    generateInviteRequestMsgSubject(invite), generateInviteRequestMsgBody(invite));
 	} catch (Exception e) {
 	    log.info("Failed to email myself an invite request.");
 	    log.info(e.getMessage());
 	    return "redirect:/error";// TODO Error page or something here.....
 	}
 
-	log.info("Finished sending a mail requesting invite for: " + UtilVars.PII_START
-		+ invite.getUserEmail() + UtilVars.PII_END);
+	log.info("Finished sending a mail requesting invite for: " + UtilVars.PII_START + invite.getUserEmail()
+		+ UtilVars.PII_END);
 
 	return "inviteGenerated";
+    }
+
+    private String generateInviteRequestMsgSubject(InviteRequestObj invite) {
+	return "Invite Request for: " + invite.getProjectName();
+    }
+
+    private String generateInviteRequestMsgBody(InviteRequestObj invite) {
+	String generatedEmailLink = generateInviteRequestConfirmationLink(invite);
+
+	return "I would like to join please! :)\n\nUser: " + invite.getUserEmail() + "\nProject: "
+		+ invite.getProjectName() + "\nInvite Generator URL: " + generatedEmailLink;
+    }
+
+    private String generateInviteRequestConfirmationLink(InviteRequestObj invite) {
+	return SystemVars.getInstance().getROOT_URL() + "/generateInvite?userEmail=" + invite.getUserEmail();
     }
 }

@@ -19,8 +19,7 @@ public class GenerateInviteCtrlr {
     private static final Logger log = LoggerFactory.getLogger(GenerateInviteCtrlr.class);
 
     @RequestMapping(value = "/generateInvite")
-    public String generateInvite(@RequestParam(value = "userEmail", required = true) String userEmail,
-	    Model model) {
+    public String generateInvite(@RequestParam(value = "userEmail", required = true) String userEmail, Model model) {
 	final String uniqueToken = new UniqueTokenGenerator().getUniqueToken();
 	String errMsg = null;
 
@@ -45,16 +44,15 @@ public class GenerateInviteCtrlr {
 	return "generateInvite";
     }
 
-    private void insertInviteInDB(String uniqueToken, String userEmail) throws DuplicateKeyException,
-	    Exception {
+    private void insertInviteInDB(String uniqueToken, String userEmail) throws DuplicateKeyException, Exception {
 	PostgresqlDataSource psqlDataSource = new PostgresqlDataSource();
 	JdbcTemplate jdbcTemplate = new JdbcTemplate(psqlDataSource.getDefaultDataSource());
 	jdbcTemplate.update("INSERT INTO invitetokens(token, email) VALUES (?,?)", uniqueToken, userEmail);
     }
 
     private void emailUserInvite(String userEmail, String token) {
-	final String inviteConfirmationUrl = SystemVars.getInstance().getROOT_URL()
-		+ "/confirmInvite?userEmail=" + userEmail + "&token=" + token;
+	final String inviteConfirmationUrl = SystemVars.getInstance().getROOT_URL() + "/confirmInvite?userEmail="
+		+ userEmail + "&token=" + token;
 
 	try {
 	    Mailer mailSender = new Mailer();
@@ -63,8 +61,7 @@ public class GenerateInviteCtrlr {
 		    "Hi!\n\nThanks for requesting an invite at feargus.org! Please follow this link to confirm your invite: "
 			    + inviteConfirmationUrl);
 	} catch (Exception e) {
-	    log.info("Failed to email user their invite: " + UtilVars.PII_START + userEmail
-		    + UtilVars.PII_END);
+	    log.info("Failed to email user their invite: " + UtilVars.PII_START + userEmail + UtilVars.PII_END);
 	    log.info(e.getMessage());
 	    return;
 	}
