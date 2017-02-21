@@ -37,6 +37,8 @@ public class AccountCreationCtrlr {
 	    return "accountCreation";
 	}
 
+	/* TODO Start transaction here */
+
 	/* Create an account for the user */
 	UserAccCreator userAccCreator = new UserAccCreator();
 	try {
@@ -69,6 +71,8 @@ public class AccountCreationCtrlr {
 	    e.printStackTrace();
 	    return "redirect:/error";// TODO Error page or something here.....
 	}
+
+	/* TODO End transaction here */
 
 	return "redirect:/index";
     }
