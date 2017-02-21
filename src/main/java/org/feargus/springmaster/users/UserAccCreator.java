@@ -31,9 +31,9 @@ public class UserAccCreator {
     }
 
     private void addUserToDB(CustomUserDetails user) throws DataAccessException {
-	jdbcTemplate.update(SqlStmts.INSERT_USER_SQL, user.getUserHandle(), user.getUserNameEmail(),
-		user.getSalt(), user.getPassword(), user.isEnabled(), user.isAccountNonExpired(),
-		user.isAccountNonLocked(), user.isCredentialsNonExpired());
+	jdbcTemplate.update(SqlStmts.INSERT_USER_SQL, user.getUserHandle(), user.getUserNameEmail(), user.getSalt(),
+		user.getPassword(), user.isEnabled(), user.isAccountNonExpired(), user.isAccountNonLocked(),
+		user.isCredentialsNonExpired());
     }
 
     public void emailUserConfirmation(CustomUserDetails userObj) throws Exception {
@@ -49,7 +49,7 @@ public class UserAccCreator {
 		+ "</p>Thanks,<br />Feargus</body></html>";
 	final String emailSubject = "User Account Confirmation for feargus.org!";
 
-	mailSender.sendMail(userObj.getUserNameEmail(), SystemVars.getInstance().getADMIN_EMAIL(),
-		emailSubject, emailBody);
+	mailSender.sendMail(userObj.getUserNameEmail(), SystemVars.getInstance().getADMIN_EMAIL(), emailSubject,
+		emailBody);
     }
 }
